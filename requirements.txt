@@ -1,1 +1,9 @@
-Django==4.2.1pip
+pandas
+numpy
+matplotlib
+folium
+IPython
+requests
+jupyter
+pretty-jupyter
+Django
