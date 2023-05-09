@@ -6,4 +6,4 @@ IPython
 requests
 jupyter
 pretty-jupyter
-Django==4.2.1pip
+Django
