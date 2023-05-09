@@ -4,6 +4,4 @@ matplotlib
 folium
 IPython
 requests
-jupyter
-pretty-jupyter
 Django
