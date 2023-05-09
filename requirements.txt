@@ -1,7 +1,7 @@
-Django
 pandas
 numpy
 matplotlib
 folium
 IPython
 requests
+Django
