@@ -31,9 +31,9 @@ jobs:
         pip install -r requirements.txt
 
     # Build the book
-    - name: Build the book
+    - name: Build the HTML
       run: |
-        python -m jupyter nbconvert --to html --template pj ./rapport.ipynb --output-dir ./_build
+        python -m jupyter nbconvert --to html --template pj ./rapport.ipynb --output-dir ./_build --output index.html
 
     # Push the book's HTML to github-pages
     - name: GitHub Pages action
