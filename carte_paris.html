@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_2ace3ca8c3bdae9490c3b90ad87098e4 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_2ace3ca8c3bdae9490c3b90ad87098e4" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_2ace3ca8c3bdae9490c3b90ad87098e4 = L.map(
+                "map_2ace3ca8c3bdae9490c3b90ad87098e4",
+                {
+                    center: [48.8566, 2.3522],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 12,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_e8463df5840d0399a10d0d420baa7a58 = L.tileLayer(
+                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "Data by \u0026copy; \u003ca target=\"_blank\" href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca target=\"_blank\" href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_2ace3ca8c3bdae9490c3b90ad87098e4);
+        
+    
+        function geo_json_8f661078a2bbc8675f03a3073acc39f3_styler(feature) {
+            switch(feature.id) {
+                default:
+                    return {"color": "#ff0000", "fillColor": "#ff0000"};
+            }
+        }
+
+        function geo_json_8f661078a2bbc8675f03a3073acc39f3_onEachFeature(feature, layer) {
+            layer.on({
+            });
+        };
+        var geo_json_8f661078a2bbc8675f03a3073acc39f3 = L.geoJson(null, {
+                onEachFeature: geo_json_8f661078a2bbc8675f03a3073acc39f3_onEachFeature,
+            
+                style: geo_json_8f661078a2bbc8675f03a3073acc39f3_styler,
+        });
+
+        function geo_json_8f661078a2bbc8675f03a3073acc39f3_add (data) {
+            geo_json_8f661078a2bbc8675f03a3073acc39f3
+                .addData(data)
+                .addTo(map_2ace3ca8c3bdae9490c3b90ad87098e4);
+        }
+            geo_json_8f661078a2bbc8675f03a3073acc39f3_add({"features": [{"geometry": {"color": "#ff0000", "coordinates": [[[2.3257616254697, 48.869546133476], [2.3278733621861, 48.869861088958], [2.3508413205563, 48.863344411573], [2.3500912644194, 48.861951749823], [2.3445592260856, 48.85398930556], [2.3328469000671, 48.859300907461], [2.3207773515807, 48.863075035941], [2.3257616254697, 48.869546133476]]], "type": "Polygon"}, "id": "0", "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            var marker_97194886e708dd023534538fc08370be = L.marker(
+                [48.86382684578349, 2.334814084479325],
+                {}
+            ).addTo(map_2ace3ca8c3bdae9490c3b90ad87098e4);
+        
+    
+        var popup_b8349d25b09b7aea184eccf7019cad74 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_9ab70a41847892dacf4a7b19a56911dc = $(`<div id="html_9ab70a41847892dacf4a7b19a56911dc" style="width: 100.0%; height: 100.0%;">Arrondissement 1 : 29890.66 €/m²</div>`)[0];
+                popup_b8349d25b09b7aea184eccf7019cad74.setContent(html_9ab70a41847892dacf4a7b19a56911dc);
+            
+        
+
+        marker_97194886e708dd023534538fc08370be.bindPopup(popup_b8349d25b09b7aea184eccf7019cad74)
+        ;
+
+        
+    
+    
+        function geo_json_f4d03e206adda175bda46be4feb55bb1_styler(feature) {
+            switch(feature.id) {
+                default:
+                    return {"color": "#ff3300", "fillColor": "#ff3300"};
+            }
+        }
+
+        function geo_json_f4d03e206adda175bda46be4feb55bb1_onEachFeature(feature, layer) {
+            layer.on({
+            });
+        };
+        var geo_json_f4d03e206adda175bda46be4feb55bb1 = L.geoJson(null, {
+                onEachFeature: geo_json_f4d03e206adda175bda46be4feb55bb1_onEachFeature,
+            
+                style: geo_json_f4d03e206adda175bda46be4feb55bb1_styler,
+        });
+
+        function geo_json_f4d03e206adda175bda46be4feb55bb1_add (data) {
+            geo_json_f4d03e206adda175bda46be4feb55bb1
+                .addData(data)
+                .addTo(map_2ace3ca8c3bdae9490c3b90ad87098e4);
+        }
+            geo_json_f4d03e206adda175bda46be4feb55bb1_add({"features": [{"geometry": {"color": "#ff3300", "coordinates": [[[2.3508413205563, 48.863344411573], [2.3278733621861, 48.869861088958], [2.3399298105677, 48.871937310519], [2.3478317710849, 48.870624420335], [2.3541114926597, 48.869275285895], [2.3508413205563, 48.863344411573]]], "type": "Polygon"}, "id": "0", "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            var marker_56982a250d793a3ebf900cd1b183e328 = L.marker(
+                [48.86806448814216, 2.3452381796018336],
+                {}
+            ).addTo(map_2ace3ca8c3bdae9490c3b90ad87098e4);
+        
+    
+        var popup_cbaf7207d3a8697c8e659833e1e1aa33 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_dabf431ec851faae48749db70127893d = $(`<div id="html_dabf431ec851faae48749db70127893d" style="width: 100.0%; height: 100.0%;">Arrondissement 2 : 13407.34 €/m²</div>`)[0];
+                popup_cbaf7207d3a8697c8e659833e1e1aa33.setContent(html_dabf431ec851faae48749db70127893d);
+            
+        
+
+        marker_56982a250d793a3ebf900cd1b183e328.bindPopup(popup_cbaf7207d3a8697c8e659833e1e1aa33)
+        ;
+
+        
+    
+    
+        function geo_json_6cb8e8fd74f469fefb69b0f9dd6bc4d8_styler(feature) {
+            switch(feature.id) {
+                default:
+                    return {"color": "#ff6600", "fillColor": "#ff6600"};
+            }
+        }
+
+        function geo_json_6cb8e8fd74f469fefb69b0f9dd6bc4d8_onEachFeature(feature, layer) {
+            layer.on({
+            });
+        };
+        var geo_json_6cb8e8fd74f469fefb69b0f9dd6bc4d8 = L.geoJson(null, {
+                onEachFeature: geo_json_6cb8e8fd74f469fefb69b0f9dd6bc4d8_onEachFeature,
+            
+                style: geo_json_6cb8e8fd74f469fefb69b0f9dd6bc4d8_styler,
+        });
+
+        function geo_json_6cb8e8fd74f469fefb69b0f9dd6bc4d8_add (data) {
+            geo_json_6cb8e8fd74f469fefb69b0f9dd6bc4d8
+                .addData(data)
+                .addTo(map_2ace3ca8c3bdae9490c3b90ad87098e4);
+        }
+            geo_json_6cb8e8fd74f469fefb69b0f9dd6bc4d8_add({"features": [{"geometry": {"color": "#ff6600", "coordinates": [[[2.3500912644194, 48.861951749823], [2.3508413205563, 48.863344411573], [2.3541114926597, 48.869275285895], [2.3638513390126, 48.867431638281], [2.3684085721728, 48.855737300049], [2.3500912644194, 48.861951749823]]], "type": "Polygon"}, "id": "0", "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            var marker_b4e35a124a2fb1d69d3d041d1eaa00fe = L.marker(
+                [48.863282022574, 2.3562325422067],
+                {}
+            ).addTo(map_2ace3ca8c3bdae9490c3b90ad87098e4);
+        
+    
+        var popup_19496024ebdcb8149548eab4dfa6f98d = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_881608baa83fdac02000ae8a10aec946 = $(`<div id="html_881608baa83fdac02000ae8a10aec946" style="width: 100.0%; height: 100.0%;">Arrondissement 3 : 13476.62 €/m²</div>`)[0];
+                popup_19496024ebdcb8149548eab4dfa6f98d.setContent(html_881608baa83fdac02000ae8a10aec946);
+            
+        
+
+        marker_b4e35a124a2fb1d69d3d041d1eaa00fe.bindPopup(popup_19496024ebdcb8149548eab4dfa6f98d)
+        ;
+
+        
+    
+    
+        function geo_json_caf8527331d41091a9fbbc39f1ec7ec8_styler(feature) {
+            switch(feature.id) {
+                default:
+                    return {"color": "#ff9900", "fillColor": "#ff9900"};
+            }
+        }
+
+        function geo_json_caf8527331d41091a9fbbc39f1ec7ec8_onEachFeature(feature, layer) {
+            layer.on({
+            });
+        };
+        var geo_json_caf8527331d41091a9fbbc39f1ec7ec8 = L.geoJson(null, {
+                onEachFeature: geo_json_caf8527331d41091a9fbbc39f1ec7ec8_onEachFeature,
+            
+                style: geo_json_caf8527331d41091a9fbbc39f1ec7ec8_styler,
+        });
+
+        function geo_json_caf8527331d41091a9fbbc39f1ec7ec8_add (data) {
+            geo_json_caf8527331d41091a9fbbc39f1ec7ec8
+                .addData(data)
+                .addTo(map_2ace3ca8c3bdae9490c3b90ad87098e4);
+        }
+            geo_json_caf8527331d41091a9fbbc39f1ec7ec8_add({"features": [{"geometry": {"color": "#ff9900", "coordinates": [[[2.3445592260856, 48.85398930556], [2.3500912644194, 48.861951749823], [2.3684085721728, 48.855737300049], [2.3690196371168, 48.853221440745], [2.3643180356191, 48.846167191329], [2.3445592260856, 48.85398930556]]], "type": "Polygon"}, "id": "0", "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            var marker_035cacb0e453ed8ce3b9d0fea1000c74 = L.marker(
+                [48.85417604884433, 2.3568259935832168],
+                {}
+            ).addTo(map_2ace3ca8c3bdae9490c3b90ad87098e4);
+        
+    
+        var popup_f1c122fb7c032608bdb4d1468cd7d0ae = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_49dd6a6fa8afbbb49c96f30a656fec88 = $(`<div id="html_49dd6a6fa8afbbb49c96f30a656fec88" style="width: 100.0%; height: 100.0%;">Arrondissement 4 : 26982.22 €/m²</div>`)[0];
+                popup_f1c122fb7c032608bdb4d1468cd7d0ae.setContent(html_49dd6a6fa8afbbb49c96f30a656fec88);
+            
+        
+
+        marker_035cacb0e453ed8ce3b9d0fea1000c74.bindPopup(popup_f1c122fb7c032608bdb4d1468cd7d0ae)
+        ;
+
+        
+    
+    
+        function geo_json_a461f848a9024febbf69901b8ef8840f_styler(feature) {
+            switch(feature.id) {
+                default:
+                    return {"color": "#ffcc00", "fillColor": "#ffcc00"};
+            }
+        }
+
+        function geo_json_a461f848a9024febbf69901b8ef8840f_onEachFeature(feature, layer) {
+            layer.on({
+            });
+        };
+        var geo_json_a461f848a9024febbf69901b8ef8840f = L.geoJson(null, {
+                onEachFeature: geo_json_a461f848a9024febbf69901b8ef8840f_onEachFeature,
+            
+                style: geo_json_a461f848a9024febbf69901b8ef8840f_styler,
+        });
+
+        function geo_json_a461f848a9024febbf69901b8ef8840f_add (data) {
+            geo_json_a461f848a9024febbf69901b8ef8840f
+                .addData(data)
+                .addTo(map_2ace3ca8c3bdae9490c3b90ad87098e4);
+        }
+            geo_json_a461f848a9024febbf69901b8ef8840f_add({"features": [{"geometry": {"color": "#ffcc00", "coordinates": [[[2.3445592260856, 48.85398930556], [2.3643180356191, 48.846167191329], [2.365950820881, 48.844908659278], [2.3613870338288, 48.839822776185], [2.3517180689518, 48.836813651152], [2.3420384635948, 48.838296917933], [2.3365927071777, 48.839690537143], [2.3445592260856, 48.85398930556]]], "type": "Polygon"}, "id": "0", "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            var marker_a3fc75dcfc67774de3d471c1f7e3a25b = L.marker(
+                [48.8442097930175, 2.35139044777805],
+                {}
+            ).addTo(map_2ace3ca8c3bdae9490c3b90ad87098e4);
+        
+    
+        var popup_9c669ad71ed18d1b181d6196e09b9e31 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_40670c2f198c081fd1911a48c91bd79a = $(`<div id="html_40670c2f198c081fd1911a48c91bd79a" style="width: 100.0%; height: 100.0%;">Arrondissement 5 : 13700.12 €/m²</div>`)[0];
+                popup_9c669ad71ed18d1b181d6196e09b9e31.setContent(html_40670c2f198c081fd1911a48c91bd79a);
+            
+        
+
+        marker_a3fc75dcfc67774de3d471c1f7e3a25b.bindPopup(popup_9c669ad71ed18d1b181d6196e09b9e31)
+        ;
+
+        
+    
+    
+        function geo_json_9cae123f98d1c1d7a99dde2d2bc8114f_styler(feature) {
+            switch(feature.id) {
+                default:
+                    return {"color": "#ffff00", "fillColor": "#ffff00"};
+            }
+        }
+
+        function geo_json_9cae123f98d1c1d7a99dde2d2bc8114f_onEachFeature(feature, layer) {
+            layer.on({
+            });
+        };
+        var geo_json_9cae123f98d1c1d7a99dde2d2bc8114f = L.geoJson(null, {
+                onEachFeature: geo_json_9cae123f98d1c1d7a99dde2d2bc8114f_onEachFeature,
+            
+                style: geo_json_9cae123f98d1c1d7a99dde2d2bc8114f_styler,
+        });
+
+        function geo_json_9cae123f98d1c1d7a99dde2d2bc8114f_add (data) {
+            geo_json_9cae123f98d1c1d7a99dde2d2bc8114f
+                .addData(data)
+                .addTo(map_2ace3ca8c3bdae9490c3b90ad87098e4);
+        }
+            geo_json_9cae123f98d1c1d7a99dde2d2bc8114f_add({"features": [{"geometry": {"color": "#ffff00", "coordinates": [[[2.3166281602877, 48.846752387477], [2.3282850183008, 48.851787363918], [2.3328469000671, 48.859300907461], [2.3445592260856, 48.85398930556], [2.3365927071777, 48.839690537143], [2.3246635446251, 48.843518038723], [2.3166281602877, 48.846752387477]]], "type": "Polygon"}, "id": "0", "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            var marker_737728b5109b4c098fdc0bbea68d0795 = L.marker(
+                [48.84882727539415, 2.328600530975957],
+                {}
+            ).addTo(map_2ace3ca8c3bdae9490c3b90ad87098e4);
+        
+    
+        var popup_663400f0269238045db80db3cfb01b82 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_665eff07bca0ff7d7c472a4dae2a5f98 = $(`<div id="html_665eff07bca0ff7d7c472a4dae2a5f98" style="width: 100.0%; height: 100.0%;">Arrondissement 6 : 18819.27 €/m²</div>`)[0];
+                popup_663400f0269238045db80db3cfb01b82.setContent(html_665eff07bca0ff7d7c472a4dae2a5f98);
+            
+        
+
+        marker_737728b5109b4c098fdc0bbea68d0795.bindPopup(popup_663400f0269238045db80db3cfb01b82)
+        ;
+
+        
+    
+    
+        function geo_json_c056772ae00551adeb4c4cc99ccae711_styler(feature) {
+            switch(feature.id) {
+                default:
+                    return {"color": "#e6ff00", "fillColor": "#e6ff00"};
+            }
+        }
+
+        function geo_json_c056772ae00551adeb4c4cc99ccae711_onEachFeature(feature, layer) {
+            layer.on({
+            });
+        };
+        var geo_json_c056772ae00551adeb4c4cc99ccae711 = L.geoJson(null, {
+                onEachFeature: geo_json_c056772ae00551adeb4c4cc99ccae711_onEachFeature,
+            
+                style: geo_json_c056772ae00551adeb4c4cc99ccae711_styler,
+        });
+
+        function geo_json_c056772ae00551adeb4c4cc99ccae711_add (data) {
+            geo_json_c056772ae00551adeb4c4cc99ccae711
+                .addData(data)
+                .addTo(map_2ace3ca8c3bdae9490c3b90ad87098e4);
+        }
+            geo_json_c056772ae00551adeb4c4cc99ccae711_add({"features": [{"geometry": {"color": "#e6ff00", "coordinates": [[[2.3207773515807, 48.863075035941], [2.3328469000671, 48.859300907461], [2.3282850183008, 48.851787363918], [2.3166281602877, 48.846752387477], [2.3021915203793, 48.850344748998], [2.2897782765961, 48.858123113769], [2.3015562721716, 48.863475234966], [2.3207773515807, 48.863075035941]]], "type": "Polygon"}, "id": "0", "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            var marker_7f2a35492248750a0f8116cd5c2152f4 = L.marker(
+                [48.856991728558874, 2.3141051063704996],
+                {}
+            ).addTo(map_2ace3ca8c3bdae9490c3b90ad87098e4);
+        
+    
+        var popup_f32000d49ed8462d8c8c42b7e50d049c = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_2404b2deac530818fd8fc040f32a6038 = $(`<div id="html_2404b2deac530818fd8fc040f32a6038" style="width: 100.0%; height: 100.0%;">Arrondissement 7 : 21931.58 €/m²</div>`)[0];
+                popup_f32000d49ed8462d8c8c42b7e50d049c.setContent(html_2404b2deac530818fd8fc040f32a6038);
+            
+        
+
+        marker_7f2a35492248750a0f8116cd5c2152f4.bindPopup(popup_f32000d49ed8462d8c8c42b7e50d049c)
+        ;
+
+        
+    
+    
+        function geo_json_4b4e44549ad347756d2e00f934ea8f13_styler(feature) {
+            switch(feature.id) {
+                default:
+                    return {"color": "#ccff00", "fillColor": "#ccff00"};
+            }
+        }
+
+        function geo_json_4b4e44549ad347756d2e00f934ea8f13_onEachFeature(feature, layer) {
+            layer.on({
+            });
+        };
+        var geo_json_4b4e44549ad347756d2e00f934ea8f13 = L.geoJson(null, {
+                onEachFeature: geo_json_4b4e44549ad347756d2e00f934ea8f13_onEachFeature,
+            
+                style: geo_json_4b4e44549ad347756d2e00f934ea8f13_styler,
+        });
+
+        function geo_json_4b4e44549ad347756d2e00f934ea8f13_add (data) {
+            geo_json_4b4e44549ad347756d2e00f934ea8f13
+                .addData(data)
+                .addTo(map_2ace3ca8c3bdae9490c3b90ad87098e4);
+        }
+            geo_json_4b4e44549ad347756d2e00f934ea8f13_add({"features": [{"geometry": {"color": "#ccff00", "coordinates": [[[2.3271206970663, 48.883485416617], [2.3257616254697, 48.869546133476], [2.3207773515807, 48.863075035941], [2.3015562721716, 48.863475234966], [2.2951453922338, 48.873861979677], [2.2981403262665, 48.87804262556], [2.3271206970663, 48.883485416617]]], "type": "Polygon"}, "id": "0", "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            var marker_4dda6380944dded74da18426347771f6 = L.marker(
+                [48.873567406122, 2.313660337407843],
+                {}
+            ).addTo(map_2ace3ca8c3bdae9490c3b90ad87098e4);
+        
+    
+        var popup_0d182c6991aac00fe772be47cd260810 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_4898471c363d1c95948af459954667d5 = $(`<div id="html_4898471c363d1c95948af459954667d5" style="width: 100.0%; height: 100.0%;">Arrondissement 8 : 19734.71 €/m²</div>`)[0];
+                popup_0d182c6991aac00fe772be47cd260810.setContent(html_4898471c363d1c95948af459954667d5);
+            
+        
+
+        marker_4dda6380944dded74da18426347771f6.bindPopup(popup_0d182c6991aac00fe772be47cd260810)
+        ;
+
+        
+    
+    
+        function geo_json_767164248dc582844c5fdb4eb5e0f950_styler(feature) {
+            switch(feature.id) {
+                default:
+                    return {"color": "#b3ff00", "fillColor": "#b3ff00"};
+            }
+        }
+
+        function geo_json_767164248dc582844c5fdb4eb5e0f950_onEachFeature(feature, layer) {
+            layer.on({
+            });
+        };
+        var geo_json_767164248dc582844c5fdb4eb5e0f950 = L.geoJson(null, {
+                onEachFeature: geo_json_767164248dc582844c5fdb4eb5e0f950_onEachFeature,
+            
+                style: geo_json_767164248dc582844c5fdb4eb5e0f950_styler,
+        });
+
+        function geo_json_767164248dc582844c5fdb4eb5e0f950_add (data) {
+            geo_json_767164248dc582844c5fdb4eb5e0f950
+                .addData(data)
+                .addTo(map_2ace3ca8c3bdae9490c3b90ad87098e4);
+        }
+            geo_json_767164248dc582844c5fdb4eb5e0f950_add({"features": [{"geometry": {"color": "#b3ff00", "coordinates": [[[2.3257616254697, 48.869546133476], [2.3271206970663, 48.883485416617], [2.3379555061118, 48.882249883375], [2.3495508401232, 48.883620167912], [2.3478317710849, 48.870624420335], [2.3399298105677, 48.871937310519], [2.3278733621861, 48.869861088958], [2.3257616254697, 48.869546133476]]], "type": "Polygon"}, "id": "0", "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            var marker_9ac868c77f254253eaf036feee4127b4 = L.marker(
+                [48.8751088193335, 2.335223154759925],
+                {}
+            ).addTo(map_2ace3ca8c3bdae9490c3b90ad87098e4);
+        
+    
+        var popup_fd23182ccddc11d480215ba6c3f36e35 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_fe4a7d326b909c1ad2ad4ac721939005 = $(`<div id="html_fe4a7d326b909c1ad2ad4ac721939005" style="width: 100.0%; height: 100.0%;">Arrondissement 9 : 15889.32 €/m²</div>`)[0];
+                popup_fd23182ccddc11d480215ba6c3f36e35.setContent(html_fe4a7d326b909c1ad2ad4ac721939005);
+            
+        
+
+        marker_9ac868c77f254253eaf036feee4127b4.bindPopup(popup_fd23182ccddc11d480215ba6c3f36e35)
+        ;
+
+        
+    
+    
+        function geo_json_acaf54f363e06bd43138088a366dfdf4_styler(feature) {
+            switch(feature.id) {
+                default:
+                    return {"color": "#99ff00", "fillColor": "#99ff00"};
+            }
+        }
+
+        function geo_json_acaf54f363e06bd43138088a366dfdf4_onEachFeature(feature, layer) {
+            layer.on({
+            });
+        };
+        var geo_json_acaf54f363e06bd43138088a366dfdf4 = L.geoJson(null, {
+                onEachFeature: geo_json_acaf54f363e06bd43138088a366dfdf4_onEachFeature,
+            
+                style: geo_json_acaf54f363e06bd43138088a366dfdf4_styler,
+        });
+
+        function geo_json_acaf54f363e06bd43138088a366dfdf4_add (data) {
+            geo_json_acaf54f363e06bd43138088a366dfdf4
+                .addData(data)
+                .addTo(map_2ace3ca8c3bdae9490c3b90ad87098e4);
+        }
+            geo_json_acaf54f363e06bd43138088a366dfdf4_add({"features": [{"geometry": {"color": "#99ff00", "coordinates": [[[2.3646776664012, 48.884291351874], [2.3770153520998, 48.87192112928], [2.3638513390126, 48.867431638281], [2.3541114926597, 48.869275285895], [2.3478317710849, 48.870624420335], [2.3495508401232, 48.883620167912], [2.3646776664012, 48.884291351874]]], "type": "Polygon"}, "id": "0", "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            var marker_18d0ba80fd811f485e8d8004db7071f3 = L.marker(
+                [48.87592219220728, 2.3602451611118],
+                {}
+            ).addTo(map_2ace3ca8c3bdae9490c3b90ad87098e4);
+        
+    
+        var popup_40d047a0b4d913718b32196e9b95ba30 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_54fd92279876a0f5c228db251e089765 = $(`<div id="html_54fd92279876a0f5c228db251e089765" style="width: 100.0%; height: 100.0%;">Arrondissement 10 : 13552.85 €/m²</div>`)[0];
+                popup_40d047a0b4d913718b32196e9b95ba30.setContent(html_54fd92279876a0f5c228db251e089765);
+            
+        
+
+        marker_18d0ba80fd811f485e8d8004db7071f3.bindPopup(popup_40d047a0b4d913718b32196e9b95ba30)
+        ;
+
+        
+    
+    
+        function geo_json_14c3d620549a984134843a00b89aa232_styler(feature) {
+            switch(feature.id) {
+                default:
+                    return {"color": "#80ff00", "fillColor": "#80ff00"};
+            }
+        }
+
+        function geo_json_14c3d620549a984134843a00b89aa232_onEachFeature(feature, layer) {
+            layer.on({
+            });
+        };
+        var geo_json_14c3d620549a984134843a00b89aa232 = L.geoJson(null, {
+                onEachFeature: geo_json_14c3d620549a984134843a00b89aa232_onEachFeature,
+            
+                style: geo_json_14c3d620549a984134843a00b89aa232_styler,
+        });
+
+        function geo_json_14c3d620549a984134843a00b89aa232_add (data) {
+            geo_json_14c3d620549a984134843a00b89aa232
+                .addData(data)
+                .addTo(map_2ace3ca8c3bdae9490c3b90ad87098e4);
+        }
+            geo_json_14c3d620549a984134843a00b89aa232_add({"features": [{"geometry": {"color": "#80ff00", "coordinates": [[[2.3770153520998, 48.87192112928], [2.3943004420294, 48.856491711482], [2.3991184448726, 48.848094484736], [2.3690196371168, 48.853221440745], [2.3684085721728, 48.855737300049], [2.3638513390126, 48.867431638281], [2.3770153520998, 48.87192112928]]], "type": "Polygon"}, "id": "0", "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            var marker_cbf48fb39ba1a1825ac728622357f6e5 = L.marker(
+                [48.86068840483614, 2.3783898770576855],
+                {}
+            ).addTo(map_2ace3ca8c3bdae9490c3b90ad87098e4);
+        
+    
+        var popup_464e1e9a818af023501a5158c9a3bb22 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_4d2f2ea82571bbc6737666a6b6c0d4ee = $(`<div id="html_4d2f2ea82571bbc6737666a6b6c0d4ee" style="width: 100.0%; height: 100.0%;">Arrondissement 11 : 12544.61 €/m²</div>`)[0];
+                popup_464e1e9a818af023501a5158c9a3bb22.setContent(html_4d2f2ea82571bbc6737666a6b6c0d4ee);
+            
+        
+
+        marker_cbf48fb39ba1a1825ac728622357f6e5.bindPopup(popup_464e1e9a818af023501a5158c9a3bb22)
+        ;
+
+        
+    
+    
+        function geo_json_a9e4b02fd09e7a09dcd8fe2942252812_styler(feature) {
+            switch(feature.id) {
+                default:
+                    return {"color": "#66ff00", "fillColor": "#66ff00"};
+            }
+        }
+
+        function geo_json_a9e4b02fd09e7a09dcd8fe2942252812_onEachFeature(feature, layer) {
+            layer.on({
+            });
+        };
+        var geo_json_a9e4b02fd09e7a09dcd8fe2942252812 = L.geoJson(null, {
+                onEachFeature: geo_json_a9e4b02fd09e7a09dcd8fe2942252812_onEachFeature,
+            
+                style: geo_json_a9e4b02fd09e7a09dcd8fe2942252812_styler,
+        });
+
+        function geo_json_a9e4b02fd09e7a09dcd8fe2942252812_add (data) {
+            geo_json_a9e4b02fd09e7a09dcd8fe2942252812
+                .addData(data)
+                .addTo(map_2ace3ca8c3bdae9490c3b90ad87098e4);
+        }
+            geo_json_a9e4b02fd09e7a09dcd8fe2942252812_add({"features": [{"geometry": {"color": "#66ff00", "coordinates": [[[2.365950820881, 48.844908659278], [2.3643180356191, 48.846167191329], [2.3690196371168, 48.853221440745], [2.3991184448726, 48.848094484736], [2.4159711107696, 48.846622956277], [2.4122456125626, 48.834538914673], [2.4221386362435, 48.835797660955], [2.4275751567613, 48.841570705794], [2.4478479965512, 48.844804739969], [2.4634383121686, 48.842089485269], [2.4672474618601, 48.839072987582], [2.465730572119, 48.826226047985], [2.4612052142523, 48.818355149154], [2.4384475102742, 48.818232447877], [2.4199625195411, 48.824080072246], [2.406031823401, 48.827615470779], [2.3900720145113, 48.82569232682], [2.365950820881, 48.844908659278]]], "type": "Polygon"}, "id": "0", "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            var marker_438d1fa20421bc54081b0a8a024326a8 = L.marker(
+                [48.836777744485886, 2.416792872243683],
+                {}
+            ).addTo(map_2ace3ca8c3bdae9490c3b90ad87098e4);
+        
+    
+        var popup_6b196bc22a496df35af2e7ea4cdbf987 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_fe682c034926883edb119b88963dace8 = $(`<div id="html_fe682c034926883edb119b88963dace8" style="width: 100.0%; height: 100.0%;">Arrondissement 12 : 10097.78 €/m²</div>`)[0];
+                popup_6b196bc22a496df35af2e7ea4cdbf987.setContent(html_fe682c034926883edb119b88963dace8);
+            
+        
+
+        marker_438d1fa20421bc54081b0a8a024326a8.bindPopup(popup_6b196bc22a496df35af2e7ea4cdbf987)
+        ;
+
+        
+    
+    
+        function geo_json_94f4c8de081a2af7f594af49e41fab1f_styler(feature) {
+            switch(feature.id) {
+                default:
+                    return {"color": "#4dff00", "fillColor": "#4dff00"};
+            }
+        }
+
+        function geo_json_94f4c8de081a2af7f594af49e41fab1f_onEachFeature(feature, layer) {
+            layer.on({
+            });
+        };
+        var geo_json_94f4c8de081a2af7f594af49e41fab1f = L.geoJson(null, {
+                onEachFeature: geo_json_94f4c8de081a2af7f594af49e41fab1f_onEachFeature,
+            
+                style: geo_json_94f4c8de081a2af7f594af49e41fab1f_styler,
+        });
+
+        function geo_json_94f4c8de081a2af7f594af49e41fab1f_add (data) {
+            geo_json_94f4c8de081a2af7f594af49e41fab1f
+                .addData(data)
+                .addTo(map_2ace3ca8c3bdae9490c3b90ad87098e4);
+        }
+            geo_json_94f4c8de081a2af7f594af49e41fab1f_add({"features": [{"geometry": {"color": "#4dff00", "coordinates": [[[2.365950820881, 48.844908659278], [2.3900720145113, 48.82569232682], [2.3642042811729, 48.816398323996], [2.3564647458137, 48.815954893718], [2.3439025047441, 48.815767001297], [2.3414937722336, 48.828568124075], [2.3420384635948, 48.838296917933], [2.3517180689518, 48.836813651152], [2.3613870338288, 48.839822776185], [2.365950820881, 48.844908659278]]], "type": "Polygon"}, "id": "0", "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            var marker_a7be91fc4ab8d2b26c419b11ccc853fc = L.marker(
+                [48.8307131333732, 2.3583182526612996],
+                {}
+            ).addTo(map_2ace3ca8c3bdae9490c3b90ad87098e4);
+        
+    
+        var popup_4188bc75b97a41c245e4ab3226b73560 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_2dc33db16b2943ba9b18f070c5eda7f2 = $(`<div id="html_2dc33db16b2943ba9b18f070c5eda7f2" style="width: 100.0%; height: 100.0%;">Arrondissement 13 : 9593.49 €/m²</div>`)[0];
+                popup_4188bc75b97a41c245e4ab3226b73560.setContent(html_2dc33db16b2943ba9b18f070c5eda7f2);
+            
+        
+
+        marker_a7be91fc4ab8d2b26c419b11ccc853fc.bindPopup(popup_4188bc75b97a41c245e4ab3226b73560)
+        ;
+
+        
+    
+    
+        function geo_json_fcfc5aa1e61b2651ebd64946d505724e_styler(feature) {
+            switch(feature.id) {
+                default:
+                    return {"color": "#33ff00", "fillColor": "#33ff00"};
+            }
+        }
+
+        function geo_json_fcfc5aa1e61b2651ebd64946d505724e_onEachFeature(feature, layer) {
+            layer.on({
+            });
+        };
+        var geo_json_fcfc5aa1e61b2651ebd64946d505724e = L.geoJson(null, {
+                onEachFeature: geo_json_fcfc5aa1e61b2651ebd64946d505724e_onEachFeature,
+            
+                style: geo_json_fcfc5aa1e61b2651ebd64946d505724e_styler,
+        });
+
+        function geo_json_fcfc5aa1e61b2651ebd64946d505724e_add (data) {
+            geo_json_fcfc5aa1e61b2651ebd64946d505724e
+                .addData(data)
+                .addTo(map_2ace3ca8c3bdae9490c3b90ad87098e4);
+        }
+            geo_json_fcfc5aa1e61b2651ebd64946d505724e_add({"features": [{"geometry": {"color": "#33ff00", "coordinates": [[[2.314145699673, 48.822290535442], [2.3013154184885, 48.825125760842], [2.3246635446251, 48.843518038723], [2.3365927071777, 48.839690537143], [2.3420384635948, 48.838296917933], [2.3414937722336, 48.828568124075], [2.3439025047441, 48.815767001297], [2.3318980606376, 48.817010929642], [2.314145699673, 48.822290535442]]], "type": "Polygon"}, "id": "0", "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            var marker_6dd75395628525fcf9649f4dfb56f038 = L.marker(
+                [48.828062042282106, 2.327799541205266],
+                {}
+            ).addTo(map_2ace3ca8c3bdae9490c3b90ad87098e4);
+        
+    
+        var popup_87dffad6cc24e6c7bd1e420958b6e42b = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_9f51a3ce8844c6f18be45316c9f567e9 = $(`<div id="html_9f51a3ce8844c6f18be45316c9f567e9" style="width: 100.0%; height: 100.0%;">Arrondissement 14 : 11265.84 €/m²</div>`)[0];
+                popup_87dffad6cc24e6c7bd1e420958b6e42b.setContent(html_9f51a3ce8844c6f18be45316c9f567e9);
+            
+        
+
+        marker_6dd75395628525fcf9649f4dfb56f038.bindPopup(popup_87dffad6cc24e6c7bd1e420958b6e42b)
+        ;
+
+        
+    
+    
+        function geo_json_065aa33abe33259c2138e139632c3a82_styler(feature) {
+            switch(feature.id) {
+                default:
+                    return {"color": "#1aff00", "fillColor": "#1aff00"};
+            }
+        }
+
+        function geo_json_065aa33abe33259c2138e139632c3a82_onEachFeature(feature, layer) {
+            layer.on({
+            });
+        };
+        var geo_json_065aa33abe33259c2138e139632c3a82 = L.geoJson(null, {
+                onEachFeature: geo_json_065aa33abe33259c2138e139632c3a82_onEachFeature,
+            
+                style: geo_json_065aa33abe33259c2138e139632c3a82_styler,
+        });
+
+        function geo_json_065aa33abe33259c2138e139632c3a82_add (data) {
+            geo_json_065aa33abe33259c2138e139632c3a82
+                .addData(data)
+                .addTo(map_2ace3ca8c3bdae9490c3b90ad87098e4);
+        }
+            geo_json_065aa33abe33259c2138e139632c3a82_add({"features": [{"geometry": {"color": "#1aff00", "coordinates": [[[2.2897782765961, 48.858123113769], [2.3021915203793, 48.850344748998], [2.3166281602877, 48.846752387477], [2.3246635446251, 48.843518038723], [2.3013154184885, 48.825125760842], [2.2893937776751, 48.828352646104], [2.2790519306533, 48.832489952145], [2.2727931901868, 48.827920084226], [2.2627915245265, 48.833923373524], [2.2724846953815, 48.843681568601], [2.2897782765961, 48.858123113769]]], "type": "Polygon"}, "id": "0", "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            var marker_b2e7ec596e5ad61d0ac000f42161b4ae = L.marker(
+                [48.84075952619799, 2.2909882104905455],
+                {}
+            ).addTo(map_2ace3ca8c3bdae9490c3b90ad87098e4);
+        
+    
+        var popup_233721c4b3b330a7da2f3b753e8995e5 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_c396834a8102391e0f8f4fb4605abd3a = $(`<div id="html_c396834a8102391e0f8f4fb4605abd3a" style="width: 100.0%; height: 100.0%;">Arrondissement 15 : 13695.36 €/m²</div>`)[0];
+                popup_233721c4b3b330a7da2f3b753e8995e5.setContent(html_c396834a8102391e0f8f4fb4605abd3a);
+            
+        
+
+        marker_b2e7ec596e5ad61d0ac000f42161b4ae.bindPopup(popup_233721c4b3b330a7da2f3b753e8995e5)
+        ;
+
+        
+    
+    
+        function geo_json_7110756ab6ecbfc77f617f16c7b15193_styler(feature) {
+            switch(feature.id) {
+                default:
+                    return {"color": "#00ff00", "fillColor": "#00ff00"};
+            }
+        }
+
+        function geo_json_7110756ab6ecbfc77f617f16c7b15193_onEachFeature(feature, layer) {
+            layer.on({
+            });
+        };
+        var geo_json_7110756ab6ecbfc77f617f16c7b15193 = L.geoJson(null, {
+                onEachFeature: geo_json_7110756ab6ecbfc77f617f16c7b15193_onEachFeature,
+            
+                style: geo_json_7110756ab6ecbfc77f617f16c7b15193_styler,
+        });
+
+        function geo_json_7110756ab6ecbfc77f617f16c7b15193_add (data) {
+            geo_json_7110756ab6ecbfc77f617f16c7b15193
+                .addData(data)
+                .addTo(map_2ace3ca8c3bdae9490c3b90ad87098e4);
+        }
+            geo_json_7110756ab6ecbfc77f617f16c7b15193_add({"features": [{"geometry": {"color": "#00ff00", "coordinates": [[[2.225670292257, 48.859404562396], [2.2317363597469, 48.86906858161], [2.2457037884056, 48.876459232476], [2.2548171406686, 48.874080881369], [2.2584671711142, 48.880387263086], [2.2799493325675, 48.878573123982], [2.2951453922338, 48.873861979677], [2.3015562721716, 48.863475234966], [2.2897782765961, 48.858123113769], [2.2724846953815, 48.843681568601], [2.2627915245265, 48.833923373524], [2.2551442384175, 48.834809549369], [2.2506124417162, 48.845554851211], [2.2242191058804, 48.853516917557], [2.225670292257, 48.859404562396]]], "type": "Polygon"}, "id": "0", "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            var marker_d1aacbcdb9ff9df5ce9a1245a2718b28 = L.marker(
+                [48.860288319732604, 2.2582497549293596],
+                {}
+            ).addTo(map_2ace3ca8c3bdae9490c3b90ad87098e4);
+        
+    
+        var popup_bdff7f3d400c25ddde8c78b1980f1ef6 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_c1a449740f8c7135fcd05f37260001d0 = $(`<div id="html_c1a449740f8c7135fcd05f37260001d0" style="width: 100.0%; height: 100.0%;">Arrondissement 16 : 15304.82 €/m²</div>`)[0];
+                popup_bdff7f3d400c25ddde8c78b1980f1ef6.setContent(html_c1a449740f8c7135fcd05f37260001d0);
+            
+        
+
+        marker_d1aacbcdb9ff9df5ce9a1245a2718b28.bindPopup(popup_bdff7f3d400c25ddde8c78b1980f1ef6)
+        ;
+
+        
+    
+    
+        function geo_json_1656bb554a7261cc5195b63f3e2c512d_styler(feature) {
+            switch(feature.id) {
+                default:
+                    return {"color": "#00e600", "fillColor": "#00e600"};
+            }
+        }
+
+        function geo_json_1656bb554a7261cc5195b63f3e2c512d_onEachFeature(feature, layer) {
+            layer.on({
+            });
+        };
+        var geo_json_1656bb554a7261cc5195b63f3e2c512d = L.geoJson(null, {
+                onEachFeature: geo_json_1656bb554a7261cc5195b63f3e2c512d_onEachFeature,
+            
+                style: geo_json_1656bb554a7261cc5195b63f3e2c512d_styler,
+        });
+
+        function geo_json_1656bb554a7261cc5195b63f3e2c512d_add (data) {
+            geo_json_1656bb554a7261cc5195b63f3e2c512d
+                .addData(data)
+                .addTo(map_2ace3ca8c3bdae9490c3b90ad87098e4);
+        }
+            geo_json_1656bb554a7261cc5195b63f3e2c512d_add({"features": [{"geometry": {"color": "#00e600", "coordinates": [[[2.2844595717547, 48.885639278202], [2.3037743623516, 48.894153778949], [2.3198871747441, 48.90045978209], [2.3299805220467, 48.901163282127], [2.3260974369951, 48.889111262565], [2.3271206970663, 48.883485416617], [2.2981403262665, 48.87804262556], [2.2951453922338, 48.873861979677], [2.2799493325675, 48.878573123982], [2.2844595717547, 48.885639278202]]], "type": "Polygon"}, "id": "0", "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            var marker_6cc847f40bc632c174e79cea34b576fc = L.marker(
+                [48.88701298079711, 2.3049014387781],
+                {}
+            ).addTo(map_2ace3ca8c3bdae9490c3b90ad87098e4);
+        
+    
+        var popup_b077354fb204d6844c671c1a09c40be4 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_18ea6f089884391deef990f916a05330 = $(`<div id="html_18ea6f089884391deef990f916a05330" style="width: 100.0%; height: 100.0%;">Arrondissement 17 : 12691.66 €/m²</div>`)[0];
+                popup_b077354fb204d6844c671c1a09c40be4.setContent(html_18ea6f089884391deef990f916a05330);
+            
+        
+
+        marker_6cc847f40bc632c174e79cea34b576fc.bindPopup(popup_b077354fb204d6844c671c1a09c40be4)
+        ;
+
+        
+    
+    
+        function geo_json_68bcdd9b4b727d83e97d7d3d8fee694c_styler(feature) {
+            switch(feature.id) {
+                default:
+                    return {"color": "#00cc00", "fillColor": "#00cc00"};
+            }
+        }
+
+        function geo_json_68bcdd9b4b727d83e97d7d3d8fee694c_onEachFeature(feature, layer) {
+            layer.on({
+            });
+        };
+        var geo_json_68bcdd9b4b727d83e97d7d3d8fee694c = L.geoJson(null, {
+                onEachFeature: geo_json_68bcdd9b4b727d83e97d7d3d8fee694c_onEachFeature,
+            
+                style: geo_json_68bcdd9b4b727d83e97d7d3d8fee694c_styler,
+        });
+
+        function geo_json_68bcdd9b4b727d83e97d7d3d8fee694c_add (data) {
+            geo_json_68bcdd9b4b727d83e97d7d3d8fee694c
+                .addData(data)
+                .addTo(map_2ace3ca8c3bdae9490c3b90ad87098e4);
+        }
+            geo_json_68bcdd9b4b727d83e97d7d3d8fee694c_add({"features": [{"geometry": {"color": "#00cc00", "coordinates": [[[2.3646776664012, 48.884291351874], [2.3495508401232, 48.883620167912], [2.3379555061118, 48.882249883375], [2.3271206970663, 48.883485416617], [2.3260974369951, 48.889111262565], [2.3299805220467, 48.901163282127], [2.3518739447639, 48.901522076927], [2.365846786, 48.901609465126], [2.3702905140491, 48.901653595285], [2.3698082422377, 48.893376450644], [2.3646776664012, 48.884291351874]]], "type": "Polygon"}, "id": "0", "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            var marker_a37d47ed1d351d801f6db6efbabb70dd = L.marker(
+                [48.89148857312054, 2.3507163474723813],
+                {}
+            ).addTo(map_2ace3ca8c3bdae9490c3b90ad87098e4);
+        
+    
+        var popup_dcc63fa05550058395d1e3472c4fd838 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_96056eb1cea10d99f349064efcfb6373 = $(`<div id="html_96056eb1cea10d99f349064efcfb6373" style="width: 100.0%; height: 100.0%;">Arrondissement 18 : 9859.04 €/m²</div>`)[0];
+                popup_dcc63fa05550058395d1e3472c4fd838.setContent(html_96056eb1cea10d99f349064efcfb6373);
+            
+        
+
+        marker_a37d47ed1d351d801f6db6efbabb70dd.bindPopup(popup_dcc63fa05550058395d1e3472c4fd838)
+        ;
+
+        
+    
+    
+        function geo_json_37869263501e096ba3a7bacc2a1bc696_styler(feature) {
+            switch(feature.id) {
+                default:
+                    return {"color": "#00b300", "fillColor": "#00b300"};
+            }
+        }
+
+        function geo_json_37869263501e096ba3a7bacc2a1bc696_onEachFeature(feature, layer) {
+            layer.on({
+            });
+        };
+        var geo_json_37869263501e096ba3a7bacc2a1bc696 = L.geoJson(null, {
+                onEachFeature: geo_json_37869263501e096ba3a7bacc2a1bc696_onEachFeature,
+            
+                style: geo_json_37869263501e096ba3a7bacc2a1bc696_styler,
+        });
+
+        function geo_json_37869263501e096ba3a7bacc2a1bc696_add (data) {
+            geo_json_37869263501e096ba3a7bacc2a1bc696
+                .addData(data)
+                .addTo(map_2ace3ca8c3bdae9490c3b90ad87098e4);
+        }
+            geo_json_37869263501e096ba3a7bacc2a1bc696_add({"features": [{"geometry": {"color": "#00b300", "coordinates": [[[2.3770153520998, 48.87192112928], [2.3646776664012, 48.884291351874], [2.3698082422377, 48.893376450644], [2.3702905140491, 48.901653595285], [2.3894416378177, 48.901152013806], [2.394906293421, 48.898444039523], [2.3986443942733, 48.889410347347], [2.4106903466383, 48.878475106516], [2.3770153520998, 48.87192112928]]], "type": "Polygon"}, "id": "0", "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            var marker_1899f7a74fa9c1d617b3d5468b6fbc95 = L.marker(
+                [48.88784946261722, 2.383609977670878],
+                {}
+            ).addTo(map_2ace3ca8c3bdae9490c3b90ad87098e4);
+        
+    
+        var popup_c2ba1f94baff7cc8903fd6afd651ae57 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_fe29e7e6ad983599fc1250315c1928f2 = $(`<div id="html_fe29e7e6ad983599fc1250315c1928f2" style="width: 100.0%; height: 100.0%;">Arrondissement 19 : 10297.09 €/m²</div>`)[0];
+                popup_c2ba1f94baff7cc8903fd6afd651ae57.setContent(html_fe29e7e6ad983599fc1250315c1928f2);
+            
+        
+
+        marker_1899f7a74fa9c1d617b3d5468b6fbc95.bindPopup(popup_c2ba1f94baff7cc8903fd6afd651ae57)
+        ;
+
+        
+    
+    
+        function geo_json_dbb4463f180f193916bb60bed0624e61_styler(feature) {
+            switch(feature.id) {
+                default:
+                    return {"color": "#009900", "fillColor": "#009900"};
+            }
+        }
+
+        function geo_json_dbb4463f180f193916bb60bed0624e61_onEachFeature(feature, layer) {
+            layer.on({
+            });
+        };
+        var geo_json_dbb4463f180f193916bb60bed0624e61 = L.geoJson(null, {
+                onEachFeature: geo_json_dbb4463f180f193916bb60bed0624e61_onEachFeature,
+            
+                style: geo_json_dbb4463f180f193916bb60bed0624e61_styler,
+        });
+
+        function geo_json_dbb4463f180f193916bb60bed0624e61_add (data) {
+            geo_json_dbb4463f180f193916bb60bed0624e61
+                .addData(data)
+                .addTo(map_2ace3ca8c3bdae9490c3b90ad87098e4);
+        }
+            geo_json_dbb4463f180f193916bb60bed0624e61_add({"features": [{"geometry": {"color": "#009900", "coordinates": [[[2.4132704497803, 48.873116980044], [2.4153151254188, 48.855173471685], [2.4163411302989, 48.849233783552], [2.4159711107696, 48.846622956277], [2.3991184448726, 48.848094484736], [2.3943004420294, 48.856491711482], [2.3770153520998, 48.87192112928], [2.4106903466383, 48.878475106516], [2.4132704497803, 48.873116980044]]], "type": "Polygon"}, "id": "0", "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            var marker_0cee9e8236381169e0940d9cf46b9973 = L.marker(
+                [48.86136073373512, 2.4061436501875555],
+                {}
+            ).addTo(map_2ace3ca8c3bdae9490c3b90ad87098e4);
+        
+    
+        var popup_57ed31a2d8f48a189addcef6c10c0865 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_7cbb5c7cdd8baa78c917f97d999a07b7 = $(`<div id="html_7cbb5c7cdd8baa78c917f97d999a07b7" style="width: 100.0%; height: 100.0%;">Arrondissement 20 : 8423.96 €/m²</div>`)[0];
+                popup_57ed31a2d8f48a189addcef6c10c0865.setContent(html_7cbb5c7cdd8baa78c917f97d999a07b7);
+            
+        
+
+        marker_0cee9e8236381169e0940d9cf46b9973.bindPopup(popup_57ed31a2d8f48a189addcef6c10c0865)
+        ;
+
+        
+    
+    
+            var layer_control_94751b34390fa1200817ffaa8a9d23a1 = {
+                base_layers : {
+                    "openstreetmap" : tile_layer_e8463df5840d0399a10d0d420baa7a58,
+                },
+                overlays :  {
+                    "macro_element_8f661078a2bbc8675f03a3073acc39f3" : geo_json_8f661078a2bbc8675f03a3073acc39f3,
+                    "macro_element_f4d03e206adda175bda46be4feb55bb1" : geo_json_f4d03e206adda175bda46be4feb55bb1,
+                    "macro_element_6cb8e8fd74f469fefb69b0f9dd6bc4d8" : geo_json_6cb8e8fd74f469fefb69b0f9dd6bc4d8,
+                    "macro_element_caf8527331d41091a9fbbc39f1ec7ec8" : geo_json_caf8527331d41091a9fbbc39f1ec7ec8,
+                    "macro_element_a461f848a9024febbf69901b8ef8840f" : geo_json_a461f848a9024febbf69901b8ef8840f,
+                    "macro_element_9cae123f98d1c1d7a99dde2d2bc8114f" : geo_json_9cae123f98d1c1d7a99dde2d2bc8114f,
+                    "macro_element_c056772ae00551adeb4c4cc99ccae711" : geo_json_c056772ae00551adeb4c4cc99ccae711,
+                    "macro_element_4b4e44549ad347756d2e00f934ea8f13" : geo_json_4b4e44549ad347756d2e00f934ea8f13,
+                    "macro_element_767164248dc582844c5fdb4eb5e0f950" : geo_json_767164248dc582844c5fdb4eb5e0f950,
+                    "macro_element_acaf54f363e06bd43138088a366dfdf4" : geo_json_acaf54f363e06bd43138088a366dfdf4,
+                    "macro_element_14c3d620549a984134843a00b89aa232" : geo_json_14c3d620549a984134843a00b89aa232,
+                    "macro_element_a9e4b02fd09e7a09dcd8fe2942252812" : geo_json_a9e4b02fd09e7a09dcd8fe2942252812,
+                    "macro_element_94f4c8de081a2af7f594af49e41fab1f" : geo_json_94f4c8de081a2af7f594af49e41fab1f,
+                    "macro_element_fcfc5aa1e61b2651ebd64946d505724e" : geo_json_fcfc5aa1e61b2651ebd64946d505724e,
+                    "macro_element_065aa33abe33259c2138e139632c3a82" : geo_json_065aa33abe33259c2138e139632c3a82,
+                    "macro_element_7110756ab6ecbfc77f617f16c7b15193" : geo_json_7110756ab6ecbfc77f617f16c7b15193,
+                    "macro_element_1656bb554a7261cc5195b63f3e2c512d" : geo_json_1656bb554a7261cc5195b63f3e2c512d,
+                    "macro_element_68bcdd9b4b727d83e97d7d3d8fee694c" : geo_json_68bcdd9b4b727d83e97d7d3d8fee694c,
+                    "macro_element_37869263501e096ba3a7bacc2a1bc696" : geo_json_37869263501e096ba3a7bacc2a1bc696,
+                    "macro_element_dbb4463f180f193916bb60bed0624e61" : geo_json_dbb4463f180f193916bb60bed0624e61,
+                },
+            };
+            L.control.layers(
+                layer_control_94751b34390fa1200817ffaa8a9d23a1.base_layers,
+                layer_control_94751b34390fa1200817ffaa8a9d23a1.overlays,
+                {"autoZIndex": true, "collapsed": true, "position": "topright"}
+            ).addTo(map_2ace3ca8c3bdae9490c3b90ad87098e4);
+        
+</script>
+</html>
