@@ -42,31 +42,31 @@ def index(request):
     #On remplace le nom des communes avec un - par un espace
     dvf2022_metre_carre['Commune'] = dvf2022_metre_carre['Commune'].str.replace('-', ' ')
 
-    nombre_de_vente_par_departement = dvf2022.groupby('Code departement')['Valeur fonciere'].count()
+    moyenne_prix_metre_carre_departement = dvf2022_metre_carre.groupby('Code departement')['Valeur fonciere'].mean() / dvf2022_metre_carre.groupby('Code departement')['Metre carre'].mean()
 
     #On renomme les colonnes
-    nombre_de_vente_par_departement = nombre_de_vente_par_departement.reset_index()
-    nombre_de_vente_par_departement = nombre_de_vente_par_departement.rename(columns={'Code departement': 'Département', 'Valeur fonciere': 'Nombre de ventes'})
+    moyenne_prix_metre_carre_departement = moyenne_prix_metre_carre_departement.reset_index()
+    moyenne_prix_metre_carre_departement = moyenne_prix_metre_carre_departement.rename(columns={'Code departement': 'Département', 0: 'Prix moyen au mètre carré'})
 
     #On fait un geojson avec les départements
     departement_geojson_url = "https://france-geojson.gregoiredavid.fr/repo/departements.geojson"
     departement_geojson = requests.get(departement_geojson_url).json()
 
 
-    fig = px.choropleth(nombre_de_vente_par_departement, 
+    fig = px.choropleth(moyenne_prix_metre_carre_departement, 
                         geojson=departement_geojson, 
                         locations='Département', 
-                        color='Nombre de ventes',
+                        color='Prix moyen au mètre carré',
                         color_continuous_scale='pinkyl',
                         featureidkey='properties.code',
                         projection="mercator",
-                        title='Nombre de ventes par département en France')
+                        title='Prix moyen par mètre carré par département en France')
     fig.update_geos(fitbounds="locations", visible=False)
     fig.update_layout(height=600, width=800)
     fig.show()
 
     template = loader.get_template("template0.html")
     context = {
-        "nombre_de_vente_par_departement": nombre_de_vente_par_departement.to_html(),
+        "graph": moyenne_prix_metre_carre_departement.to_html(),
     }
     return HttpResponse(template.render(context, request))
