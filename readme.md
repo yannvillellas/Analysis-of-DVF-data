@@ -10,7 +10,13 @@ Vous devez mettre à la racine de votre projet les valeurs foncières de 2019 et
 #### Django
 Pour lancer notre site fait sur Django, vous devez [installer django](https://docs.djangoproject.com/fr/4.2/intro/install/). Après avoir suivi le tutoriel d'installation, rendez-vous à la racine du projet et exécutez la commande suivante :
 - `python mysite/manage.py runserver`
-- Et voilà, votre site est disponible à l'adresse [127.0.0.1:8000](127.0.0.1:8000).
+- Et voilà, votre site est disponible à l'adresse [http://127.0.0.1:8000](http://127.0.0.1:8000).
+
+#### Notebook au format HTML
+Vous pouvez ouvrir la dernière version du notebook en allant [ici](https://yannvillellas.github.io/Analysis-of-DVF-data/).
+Pour build la dernière version du notebook, vous devez installer [Jupyter](https://jupyter.org/install) et [nbconvert](https://nbconvert.readthedocs.io/en/latest/install.html). Après avoir suivi les tutoriels d'installation, rendez-vous à la racine du projet et exécutez la commande suivante :
+- `jupyter nbconvert --to html --template pj ./rapport.ipynb --output-dir ./_build --output index.html`
+Et voilà, votre notebook est disponible dans le dossier `_build` à la racine du projet.
 
 ### Mini-rapport :
 #### Avancement et difficultés :
