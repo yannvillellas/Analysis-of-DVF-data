@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django import forms
 import pandas as pd
 import plotly.express as px
@@ -34,30 +34,23 @@ group_by_department = dvf2022.groupby('Code departement')['Valeur fonciere'].mea
 group_by_department = group_by_department.drop(['971', '972', '973', '974'])
 #On regroupe par région
 regions = {
-    "Grand Est": ['08', '10', '51', '52', '54', '55', '88'], #'57', '67', '68', manquant car le dvf ne contient pas l'alsace-moselle
-    "Nouvelle-Aquitaine": ['16', '17', '19', '23', '24', '33', '40', '47', '64', '79', '86', '87'],
     "Auvergne-Rhône-Alpes": ['01', '03', '07', '15', '26', '38', '42', '43', '63', '69', '73', '74'],
     "Bourgogne-Franche-Comté": ['21', '25', '39', '58', '70', '71', '89', '90'],
     "Bretagne": ['22', '29', '35', '56'],
     "Centre-Val de Loire": ['18', '28', '36', '37', '41', '45'],
     "Corse": ['2A', '2B'],
-    "Île-de-France": ['75', '77', '78', '91', '92', '93', '94', '95'],
-    "Occitanie": ['09', '11', '12', '30', '31', '32', '34', '46', '48', '65', '66', '81', '82'],
+    "Grand Est": ['08', '10', '51', '52', '54', '55', '57', '67', '68', '88'],
     "Hauts-de-France": ['02', '59', '60', '62', '80'],
+    "Île-de-France": ['75', '77', '78', '91', '92', '93', '94', '95'],
     "Normandie": ['14', '27', '50', '61', '76'],
+    "Nouvelle-Aquitaine": ['16', '17', '19', '23', '24', '33', '40', '47', '64', '79', '86', '87'],
+    "Occitanie": ['09', '11', '12', '30', '31', '32', '34', '46', '48', '65', '66', '81', '82'],
     "Pays de la Loire": ['44', '49', '53', '72', '85'],
     "Provence-Alpes-Côte d'Azur": ['04', '05', '06', '13', '83', '84']
 }
 
 
 class MyForm(forms.Form):
-    my_choice_field = forms.ChoiceField(choices=[])
-    def __init__(self, *args, **kwargs):
-        choices = kwargs.pop('choices', [])
-        super().__init__(*args, **kwargs)
-        self.fields['my_choice_field'].choices = choices
-
-class RegionsForm(forms.Form):
     my_choice_field = forms.ChoiceField(choices=[])
     def __init__(self, *args, **kwargs):
         choices = kwargs.pop('choices', [])
@@ -80,11 +73,14 @@ def homepage(request):
         if form.is_valid():
             choice = form.cleaned_data['my_choice_field']
             if choice == 'prixMoyen':
-                return prixMoyen(request)
+                response = redirect('/prixMoyen/')
+                return response
             elif choice == 'nombreVente':
-                return nombreVente(request)
-            elif choice == 'regionsFormPlot':
-                return regionsFormPlot(request)
+                response = redirect('/nombreVente/')
+                return response
+            elif choice == 'regionsForm':
+                response = redirect('/regionsForm/')
+                return response
     return render(request, 'form.html', context)
 
 
@@ -137,33 +133,32 @@ def nombreVente(request):
     }
     return render(request, "plot.html", context)
 
-def regionsFormPlot(request):
-    # fonction qui permet de créer un formulaire avec les régions de France
-    # et qui redirige vers la page regionsPlot avec la région choisie
+def regionsForm(request):
     list_choices = [ (key, key) for key in regions.keys() ]
-    form = RegionsForm(choices=list_choices)
+    form = MyForm(choices=list_choices)
     context = {
         'form': form
     }
     if request.method == 'POST':
-        form = RegionsForm(request.POST, choices=list_choices)
+        form = MyForm(request.POST, choices=list_choices)
         if form.is_valid():
             choice = form.cleaned_data['my_choice_field']
             return regionsPlot(request, choice)
     return render(request, 'form.html', context)
 
 def regionsPlot(request, region):
-    #On fait un nouveau tableau contenant que les départements de la région choisie
-    dvf2022_metre_carre_region = dvf2022_metre_carre[dvf2022_metre_carre['Code departement'].isin(region)]
-    #On fait la moyenne du prix au mètre carré par département
-    moyenne_prix_metre_carre_region = dvf2022_metre_carre_region.groupby('Code departement')['Valeur fonciere'].mean() / dvf2022_metre_carre_region.groupby('Code departement')['Metre carre'].mean()
+    # fonction qui permet de créer un plot avec les départements de la région choisie
+    # et qui redirige vers la page plot avec le plot
+    list_departements = regions[region]
+    dvf2022_metre_carre_region = dvf2022_metre_carre[dvf2022_metre_carre['Code departement'].isin(list_departements)]
+    moyenne_prix_metre_carre_departement = dvf2022_metre_carre_region.groupby('Code departement')['Valeur fonciere'].mean() / dvf2022_metre_carre_region.groupby('Code departement')['Metre carre'].mean()
     #On renomme les colonnes
-    moyenne_prix_metre_carre_region = moyenne_prix_metre_carre_region.reset_index()
-    moyenne_prix_metre_carre_region = moyenne_prix_metre_carre_region.rename(columns={'Code departement': 'Département', 0: 'Prix moyen au mètre carré'})
+    moyenne_prix_metre_carre_departement = moyenne_prix_metre_carre_departement.reset_index()
+    moyenne_prix_metre_carre_departement = moyenne_prix_metre_carre_departement.rename(columns={'Code departement': 'Département', 0: 'Prix moyen au mètre carré'})
     #On fait un geojson avec les départements
     departement_geojson_url = "https://france-geojson.gregoiredavid.fr/repo/departements.geojson"
     departement_geojson = requests.get(departement_geojson_url).json()
-    fig = px.choropleth(moyenne_prix_metre_carre_region,
+    fig = px.choropleth(moyenne_prix_metre_carre_departement,
                         geojson=departement_geojson,
                         locations='Département',
                         color='Prix moyen au mètre carré',
