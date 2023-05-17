@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plot form</title>
+</head>
+<body>
+    <label for="page">Choose a plot:</label>
+    <form method ='post'
+    id="region_form"
+    >
+        {% csrf_token %}
+        {{form.my_choice_field}}
+        <input type="submit" value="Submit">
+    </form>
+    <p>PLOT</p>
+    {{plot|safe}}
+</body>
+<script>
+    //Get the last component of the url
+    var url = window.location.href;
+    var url_split = url.split("/");
+    var last_component = url_split[url_split.length - 1];
+
+    //Decode the last component of the url
+    last_component = decodeURIComponent(last_component);
+
+    //Set the selected option to the last component of the url
+    var select = document.getElementById("id_my_choice_field");
+    var options = select.options;
+    for (var i = 0; i < options.length; i++) {
+        if (options[i].value == last_component) {
+            options[i].selected = true;
+            break;
+        }
+    }
+</script>
+</html>
