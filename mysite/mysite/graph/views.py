@@ -105,18 +105,15 @@ def prixMoyen(request):
     }
     return render(request, "plot.html", context)
 
+
 def nombreVente(request):
     nombre_de_vente_par_departement = dvf2022.groupby('Code departement')['Valeur fonciere'].count()
-
     #On renomme les colonnes
     nombre_de_vente_par_departement = nombre_de_vente_par_departement.reset_index()
     nombre_de_vente_par_departement = nombre_de_vente_par_departement.rename(columns={'Code departement': 'Département', 'Valeur fonciere': 'Nombre de ventes'})
-
     #On fait un geojson avec les départements
     departement_geojson_url = "https://france-geojson.gregoiredavid.fr/repo/departements.geojson"
     departement_geojson = requests.get(departement_geojson_url).json()
-
-
     fig = px.choropleth(nombre_de_vente_par_departement, 
                         geojson=departement_geojson, 
                         locations='Département', 
@@ -127,7 +124,6 @@ def nombreVente(request):
                         title='Nombre de ventes par département en France')
     fig.update_geos(fitbounds="locations", visible=False)
     fig.update_layout(height=600, width=800)
-
     plot_html = fig.to_html(full_html=False, default_height=500, default_width=700)
     context = {
         "plot": plot_html
