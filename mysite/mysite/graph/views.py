@@ -71,9 +71,7 @@ class MyForm(forms.Form):
 def homepage(request):
     list_choices = [
         ('prixMoyen', 'Prix moyen par mètre carré par département en France'),
-        ('nombreVente', 'Nombre de ventes par département en France'),
-        ('regionsForm', 'Choisir une région'),
-    ]
+        ('nombreVente', 'Nombre de ventes par département en France'),]
     form = MyForm(choices=list_choices)
     context = {
         'form': form
@@ -87,9 +85,6 @@ def homepage(request):
                 return response
             elif choice == 'nombreVente':
                 response = redirect('/nombreVente/')
-                return response
-            elif choice == 'regionsForm':
-                response = redirect('/regionsForm/')
                 return response
     return render(request, 'form.html', context)
 
@@ -164,20 +159,6 @@ def nombreVente(request):
         "plot": plot_html
     }
     return render(request, "formplot.html", context)
-
-def regionsForm(request):
-    list_choices = [ (key, key) for key in regions.keys() ]
-    form = MyForm(choices=list_choices)
-    context = {
-        'form': form
-    }
-    if request.method == 'POST':
-        form = MyForm(request.POST, choices=list_choices)
-        if form.is_valid():
-            choice = form.cleaned_data['my_choice_field']
-            response = redirect('/regionsFormPlot/' + choice)
-            return response
-    return render(request, 'form.html', context)
 
 def prixMoyenRegions(request ,region):
     # fonction qui permet de créer un plot avec les départements de la région choisie
