@@ -140,21 +140,7 @@ def nombreVente(request):
 def regionsFormPlot(request):
     # fonction qui permet de créer un formulaire avec les régions de France
     # et qui redirige vers la page regionsPlot avec la région choisie
-    list_choices = [
-        ('Grand Est', 'Grand Est'),
-        ('Nouvelle-Aquitaine', 'Nouvelle-Aquitaine'),
-        ('Auvergne-Rhône-Alpes', 'Auvergne-Rhône-Alpes'),
-        ('Bourgogne-Franche-Comté', 'Bourgogne-Franche-Comté'),
-        ('Bretagne', 'Bretagne'),
-        ('Centre-Val de Loire', 'Centre-Val de Loire'),
-        ('Corse', 'Corse'),
-        ('Île-de-France', 'Île-de-France'),
-        ('Occitanie', 'Occitanie'),
-        ('Hauts-de-France', 'Hauts-de-France'),
-        ('Normandie', 'Normandie'),
-        ('Pays de la Loire', 'Pays de la Loire'),
-        ('Provence-Alpes-Côte d\'Azur', 'Provence-Alpes-Côte d\'Azur')
-    ]
+    list_choices = [ (key, key) for key in regions.keys() ]
     form = RegionsForm(choices=list_choices)
     context = {
         'form': form
@@ -167,32 +153,6 @@ def regionsFormPlot(request):
     return render(request, 'form.html', context)
 
 def regionsPlot(request, region):
-    if region == 'Grand Est':
-        region = regions['Grand Est']
-    elif region == 'Nouvelle-Aquitaine':
-        region = regions['Nouvelle-Aquitaine']
-    elif region == 'Auvergne-Rhône-Alpes':
-        region = regions['Auvergne-Rhône-Alpes']
-    elif region == 'Bourgogne-Franche-Comté':
-        region = regions['Bourgogne-Franche-Comté']
-    elif region == 'Bretagne':
-        region = regions['Bretagne']
-    elif region == 'Centre-Val de Loire':
-        region = regions['Centre-Val de Loire']
-    elif region == 'Corse':
-        region = regions['Corse']
-    elif region == 'Île-de-France':
-        region = regions['Île-de-France']
-    elif region == 'Occitanie':
-        region = regions['Occitanie']
-    elif region == 'Hauts-de-France':
-        region = regions['Hauts-de-France']
-    elif region == 'Normandie':
-        region = regions['Normandie']
-    elif region == 'Pays de la Loire':
-        region = regions['Pays de la Loire']
-    elif region == 'Provence-Alpes-Côte d\'Azur':
-        region = regions['Provence-Alpes-Côte d\'Azur']
     #On fait un nouveau tableau contenant que les départements de la région choisie
     dvf2022_metre_carre_region = dvf2022_metre_carre[dvf2022_metre_carre['Code departement'].isin(region)]
     #On fait la moyenne du prix au mètre carré par département
