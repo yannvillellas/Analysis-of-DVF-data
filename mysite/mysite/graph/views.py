@@ -1,12 +1,8 @@
-# from django.http import HttpResponse
-# from django.template import loader
 from django.shortcuts import render
 from django import forms
 import pandas as pd
 import plotly.express as px
 import requests
-
-# Create your views here.
 
 ## 2022
 # On importe le fichier csv
@@ -32,23 +28,6 @@ dvf2022 = dvf2022.drop_duplicates(subset=['Date mutation', 'Valeur fonciere', 'S
 dvf2022_metre_carre = dvf2022[dvf2022['Metre carre'] >= 1]
 # On remplace le nom des communes avec un - par un espace
 dvf2022_metre_carre['Commune'] = dvf2022_metre_carre['Commune'].str.replace('-', ' ')
-#region 2019
-# ## 2019
-# dvf2019 = pd.read_csv("valeursfoncieres-2019.txt", sep="|", low_memory=False)
-# dvf2019 = dvf2019.drop(['Identifiant de document', 'Reference document', '1 Articles CGI', '2 Articles CGI', '3 Articles CGI', '4 Articles CGI','5 Articles CGI', 'No disposition', 'No voie'], axis=1)
-# dvf2019 = dvf2019.drop(['B/T/Q', 'Type de voie', 'Code voie', 'Code commune', 'Prefixe de section', 'Section', 'No plan', 'No Volume'], axis=1)
-# dvf2019 = dvf2019.drop(['Voie','Nature culture speciale', 'Identifiant local', 'Nombre de lots', '3eme lot', 'Surface Carrez du 3eme lot', '5eme lot', 'Surface Carrez du 5eme lot', '4eme lot', 'Surface Carrez du 4eme lot'], axis=1)
-# dvf2019['Valeur fonciere'] = dvf2019['Valeur fonciere'].str.replace(',', '.').astype(float)
-# dvf2019['Surface reelle bati'] = dvf2019['Surface reelle bati'].astype(float)
-# dvf2019['Surface Carrez du 1er lot'] = dvf2019['Surface Carrez du 1er lot'].str.replace(',', '.').astype(float)
-# dvf2019['Surface Carrez du 2eme lot'] = dvf2019['Surface Carrez du 2eme lot'].str.replace(',', '.').astype(float)
-# dvf2019 = dvf2019.fillna(0)
-# dvf2019['Metre carre'] = dvf2019['Surface Carrez du 1er lot'].astype(float) + dvf2019['Surface Carrez du 2eme lot'].astype(float)
-# dvf2019['Metre carre'] = dvf2019['Surface Carrez du 1er lot'].astype(float) + dvf2019['Surface Carrez du 2eme lot'].astype(float)
-# dvf2019_metre_carre = dvf2019[dvf2019['Metre carre'] >= 1]
-# dvf2019_metre_carre['Commune'] = dvf2019_metre_carre['Commune'].str.replace('-', ' ')
-#endregion
-
 #Comparaison du prix moyen du mètre carré entre les différentes régions de France
 group_by_department = dvf2022.groupby('Code departement')['Valeur fonciere'].mean() / dvf2022.groupby('Code departement')['Metre carre'].mean()
 #On enlève les départements d'outre mer
@@ -70,7 +49,7 @@ regions = {
     "Provence-Alpes-Côte d'Azur": ['04', '05', '06', '13', '83', '84']
 }
 
-# class to create a form with a choice field
+
 class MyForm(forms.Form):
     my_choice_field = forms.ChoiceField(choices=[])
     def __init__(self, *args, **kwargs):
@@ -78,8 +57,8 @@ class MyForm(forms.Form):
         super().__init__(*args, **kwargs)
         self.fields['my_choice_field'].choices = choices
 
+
 def homepage(request):
-    # form avec les choix de plot qui amène sur les pages /prixMoyen et /nombreVente
     list_choices = [
         ('prixMoyen', 'Prix moyen par mètre carré par département en France'),
         ('nombreVente', 'Nombre de ventes par département en France'),
@@ -101,18 +80,15 @@ def homepage(request):
                 return regionsFormPlot(request)
     return render(request, 'form.html', context)
 
+
 def prixMoyen(request):
     moyenne_prix_metre_carre_departement = dvf2022_metre_carre.groupby('Code departement')['Valeur fonciere'].mean() / dvf2022_metre_carre.groupby('Code departement')['Metre carre'].mean()
-
     #On renomme les colonnes
     moyenne_prix_metre_carre_departement = moyenne_prix_metre_carre_departement.reset_index()
     moyenne_prix_metre_carre_departement = moyenne_prix_metre_carre_departement.rename(columns={'Code departement': 'Département', 0: 'Prix moyen au mètre carré'})
-
     #On fait un geojson avec les départements
     departement_geojson_url = "https://france-geojson.gregoiredavid.fr/repo/departements.geojson"
     departement_geojson = requests.get(departement_geojson_url).json()
-
-
     fig = px.choropleth(moyenne_prix_metre_carre_departement, 
                         geojson=departement_geojson, 
                         locations='Département', 
@@ -123,13 +99,10 @@ def prixMoyen(request):
                         title='Prix moyen par mètre carré par département en France')
     fig.update_geos(fitbounds="locations", visible=False)
     fig.update_layout(height=600, width=800)
-    
     plot_html = fig.to_html(full_html=False, default_height=500, default_width=700)
-    # template = loader.get_template("template0.html")
     context = {
         "plot": plot_html
     }
-    # return HttpResponse(template.render(context, request))
     return render(request, "plot.html", context)
 
 def nombreVente(request):
@@ -162,4 +135,18 @@ def nombreVente(request):
     return render(request, "plot.html", context)
 
 def regionsFormPlot(request):
-    return
+    # form avec les choix de plot qui amène sur les pages /prixMoyen et /nombreVente en fonction de la région
+    list_choices = [region for region in regions]
+    form = MyForm(choices=list_choices)
+    context = {
+        'form': form
+    }
+    if request.method == 'POST':
+        form = MyForm(request.POST, choices=list_choices)
+        if form.is_valid():
+            choice = form.cleaned_data['my_choice_field']
+            return regionsPlot(request, choice)
+    return render(request, 'form.html', context)
+
+def regionsPlot(request, region):
+    return render(request, 'regions.html', {'region': region})
