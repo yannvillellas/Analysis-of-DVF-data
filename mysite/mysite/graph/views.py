@@ -58,9 +58,9 @@ regions = {
     "Pays de la Loire": ['44', '49', '53', '72', '85'],
     "Provence-Alpes-Côte d'Azur": ['04', '05', '06', '13', '83', '84']
 }
-
-
-
+#On fait un geojson avec les départements
+departement_geojson_url = "https://france-geojson.gregoiredavid.fr/repo/departements.geojson"
+departement_geojson = requests.get(departement_geojson_url).json()
 
 class MyForm(forms.Form):
     my_choice_field = forms.ChoiceField(choices=[])
@@ -73,7 +73,11 @@ class MyForm(forms.Form):
 def homepage(request):
     list_choices = [
         ('prixMoyen', 'Prix moyen par mètre carré par département en France'),
-        ('nombreVentes', 'Nombre de ventes par département en France'),]
+        ('nombreVentes', 'Nombre de ventes par département en France'),
+        ('tailleMoyenne', 'Taille moyenne des terrains par département en France'),
+        ('prixNombrePieces', 'Prix moyen par nombre de pièces principales'),
+        ('progressionVentes', 'Évolution de mutation immobilière en France en 2022')
+        ]
     form = MyForm(choices=list_choices)
     context = {
         'form': form
@@ -88,18 +92,25 @@ def homepage(request):
             elif choice == 'nombreVentes':
                 response = redirect('/nombreVentes/France')
                 return response
+            elif choice == 'tailleMoyenne':
+                response = redirect('/tailleMoyenne/France')
+                return response
+            elif choice == 'prixNombrePieces':
+                response = redirect('/prixNombrePieces/France')
+                return response
+            elif choice == 'progressionVentes':
+                response = redirect('/progressionVentes/France')
+                return response
     return render(request, 'form.html', context)
 
-def prixMoyenRegions(request, region):
+
+def prixMoyen(request, region):
     list_departements = regions[region]
     dvf2022_metre_carre_region = dvf2022_metre_carre[dvf2022_metre_carre['Code departement'].isin(list_departements)]
     moyenne_prix_metre_carre_departement = dvf2022_metre_carre_region.groupby('Code departement')['Valeur fonciere'].mean() / dvf2022_metre_carre_region.groupby('Code departement')['Metre carre'].mean()
     #On renomme les colonnes
     moyenne_prix_metre_carre_departement = moyenne_prix_metre_carre_departement.reset_index()
     moyenne_prix_metre_carre_departement = moyenne_prix_metre_carre_departement.rename(columns={'Code departement': 'Département', 0: 'Prix moyen au mètre carré'})
-    #On fait un geojson avec les départements
-    departement_geojson_url = "https://france-geojson.gregoiredavid.fr/repo/departements.geojson"
-    departement_geojson = requests.get(departement_geojson_url).json()
     fig = px.choropleth(moyenne_prix_metre_carre_departement,
                         geojson=departement_geojson,
                         locations='Département',
@@ -126,16 +137,14 @@ def prixMoyenRegions(request, region):
     }
     return render(request, "formplot.html", context)
 
-def nombreVentesRegions(request, region):
+
+def nombreVentes(request, region):
     list_departements = regions[region]
     dvf2022_region = dvf2022[dvf2022['Code departement'].isin(list_departements)]
     nombre_de_vente_par_departement = dvf2022_region.groupby('Code departement')['Valeur fonciere'].count()
     #On renomme les colonnes
     nombre_de_vente_par_departement = nombre_de_vente_par_departement.reset_index()
     nombre_de_vente_par_departement = nombre_de_vente_par_departement.rename(columns={'Code departement': 'Département', 'Valeur fonciere': 'Nombre de ventes'})
-    #On fait un geojson avec les départements
-    departement_geojson_url = "https://france-geojson.gregoiredavid.fr/repo/departements.geojson"
-    departement_geojson = requests.get(departement_geojson_url).json()
     fig = px.choropleth(nombre_de_vente_par_departement,
                         geojson=departement_geojson,
                         locations='Département',
@@ -154,7 +163,93 @@ def nombreVentesRegions(request, region):
         form = MyForm(request.POST, choices=list_choices)
         if form.is_valid():
             choice = form.cleaned_data['my_choice_field']
-            response = redirect('/nombreVente/' + choice)
+            response = redirect('/nombreVentes/' + choice)
+            return response
+    context = {
+        "form": form,
+        "plot": plot_html
+    }
+    return render(request, "formplot.html", context)
+
+def tailleMoyenne(request, region):
+    list_departements = regions[region]
+    dvf2022_region = dvf2022[dvf2022['Code departement'].isin(list_departements)]
+    moyenne_taille_terrain = dvf2022_region[dvf2022_region['Surface terrain'] > 0]
+    moyenne_taille_terrain = moyenne_taille_terrain.groupby('Code departement')['Surface terrain'].mean()
+    #On renomme les colonnes
+    moyenne_taille_terrain = moyenne_taille_terrain.reset_index()
+    moyenne_taille_terrain = moyenne_taille_terrain.rename(columns={'Code departement': 'Département', 0: 'Surface moyenne du terrain'})
+    fig = px.choropleth(moyenne_taille_terrain, 
+                        geojson=departement_geojson, 
+                        locations='Département', 
+                        color='Surface terrain',
+                        color_continuous_scale='blugrn',
+                        featureidkey='properties.code',
+                        projection="mercator",
+                        title='Surface moyenne des terrains par département en France')
+    fig.update_geos(fitbounds="locations", visible=False)
+    fig.update_layout(height=600, width=800)
+    plot_html = fig.to_html(full_html=False, default_height=500, default_width=700)
+
+    list_choices = [ (key, key) for key in regions.keys() ]
+    form = MyForm(choices=list_choices)
+    if request.method == 'POST':
+        form = MyForm(request.POST, choices=list_choices)
+        if form.is_valid():
+            choice = form.cleaned_data['my_choice_field']
+            response = redirect('/tailleMoyenne/' + choice)
+            return response
+    context = {
+        "form": form,
+        "plot": plot_html
+    }
+    return render(request, "formplot.html", context)
+
+def prixNombrePieces(request, region):
+    list_departements = regions[region]
+    dvf2022_region = dvf2022[dvf2022['Code departement'].isin(list_departements)]
+    prix_par_piece = dvf2022_region.query("`Nombre pieces principales`.notna() and `Nombre pieces principales` != 0")
+    prix_par_piece = prix_par_piece.groupby('Nombre pieces principales')['Valeur fonciere'].mean()
+    #On enlève les valeurs supérieurs à 20 pièces
+    prix_par_piece = prix_par_piece[prix_par_piece.index <= 20]
+    #On renomme les colonnes
+    prix_par_piece = prix_par_piece.reset_index()
+    prix_par_piece = prix_par_piece.rename(columns={'Nombre pieces principales': 'Nombre de pièces principales', 'Valeur fonciere': 'Prix moyen'})
+    fig = px.bar(prix_par_piece, x='Nombre de pièces principales', y='Prix moyen', title='Prix moyen par nombre de pièces principales')
+    plot_html = fig.to_html(full_html=False, default_height=500, default_width=700)
+
+    list_choices = [ (key, key) for key in regions.keys() ]
+    form = MyForm(choices=list_choices)
+    if request.method == 'POST':
+        form = MyForm(request.POST, choices=list_choices)
+        if form.is_valid():
+            choice = form.cleaned_data['my_choice_field']
+            response = redirect('/prixNombrePieces/' + choice)
+            return response
+    context = {
+        "form": form,
+        "plot": plot_html
+    }
+    return render(request, "formplot.html", context)
+
+
+def progressionVentes(request, region):
+    list_departements = regions[region]
+    dvf2022_region = dvf2022[dvf2022['Code departement'].isin(list_departements)]
+    ventes_par_jours = dvf2022_region
+    ventes_par_jours['Date mutation'] = pd.to_datetime(ventes_par_jours['Date mutation'], format='%d/%m/%Y')
+    ventes_par_jours = ventes_par_jours.groupby(pd.Grouper(key='Date mutation', freq='M')).size().reset_index(name='Nombre de ventes')
+    ventes_par_jours.sort_values('Date mutation', inplace=True)
+    fig = px.line(ventes_par_jours, x='Date mutation', y='Nombre de ventes', title=f'Évolution de mutation immobilière en {region} en 2022')
+    plot_html = fig.to_html(full_html=False, default_height=500, default_width=700)
+
+    list_choices = [ (key, key) for key in regions.keys() ]
+    form = MyForm(choices=list_choices)
+    if request.method == 'POST':
+        form = MyForm(request.POST, choices=list_choices)
+        if form.is_valid():
+            choice = form.cleaned_data['my_choice_field']
+            response = redirect('/progressionVentes/' + choice)
             return response
     context = {
         "form": form,
