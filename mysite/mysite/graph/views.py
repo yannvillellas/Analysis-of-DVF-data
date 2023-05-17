@@ -57,6 +57,13 @@ class MyForm(forms.Form):
         super().__init__(*args, **kwargs)
         self.fields['my_choice_field'].choices = choices
 
+class RegionsForm(forms.Form):
+    my_choice_field = forms.ChoiceField(choices=[])
+    def __init__(self, *args, **kwargs):
+        choices = kwargs.pop('choices', [])
+        super().__init__(*args, **kwargs)
+        self.fields['my_choice_field'].choices = choices
+
 
 def homepage(request):
     list_choices = [
@@ -76,7 +83,7 @@ def homepage(request):
                 return prixMoyen(request)
             elif choice == 'nombreVente':
                 return nombreVente(request)
-            elif choice == 'regionsChoice':
+            elif choice == 'regionsFormPlot':
                 return regionsFormPlot(request)
     return render(request, 'form.html', context)
 
@@ -131,18 +138,83 @@ def nombreVente(request):
     return render(request, "plot.html", context)
 
 def regionsFormPlot(request):
-    # form avec les choix de plot qui amène sur les pages /prixMoyen et /nombreVente en fonction de la région
-    list_choices = [region for region in regions]
-    form = MyForm(choices=list_choices)
+    # fonction qui permet de créer un formulaire avec les régions de France
+    # et qui redirige vers la page regionsPlot avec la région choisie
+    list_choices = [
+        ('Grand Est', 'Grand Est'),
+        ('Nouvelle-Aquitaine', 'Nouvelle-Aquitaine'),
+        ('Auvergne-Rhône-Alpes', 'Auvergne-Rhône-Alpes'),
+        ('Bourgogne-Franche-Comté', 'Bourgogne-Franche-Comté'),
+        ('Bretagne', 'Bretagne'),
+        ('Centre-Val de Loire', 'Centre-Val de Loire'),
+        ('Corse', 'Corse'),
+        ('Île-de-France', 'Île-de-France'),
+        ('Occitanie', 'Occitanie'),
+        ('Hauts-de-France', 'Hauts-de-France'),
+        ('Normandie', 'Normandie'),
+        ('Pays de la Loire', 'Pays de la Loire'),
+        ('Provence-Alpes-Côte d\'Azur', 'Provence-Alpes-Côte d\'Azur')
+    ]
+    form = RegionsForm(choices=list_choices)
     context = {
         'form': form
     }
     if request.method == 'POST':
-        form = MyForm(request.POST, choices=list_choices)
+        form = RegionsForm(request.POST, choices=list_choices)
         if form.is_valid():
             choice = form.cleaned_data['my_choice_field']
             return regionsPlot(request, choice)
     return render(request, 'form.html', context)
 
 def regionsPlot(request, region):
-    return render(request, 'regions.html', {'region': region})
+    if region == 'Grand Est':
+        region = regions['Grand Est']
+    elif region == 'Nouvelle-Aquitaine':
+        region = regions['Nouvelle-Aquitaine']
+    elif region == 'Auvergne-Rhône-Alpes':
+        region = regions['Auvergne-Rhône-Alpes']
+    elif region == 'Bourgogne-Franche-Comté':
+        region = regions['Bourgogne-Franche-Comté']
+    elif region == 'Bretagne':
+        region = regions['Bretagne']
+    elif region == 'Centre-Val de Loire':
+        region = regions['Centre-Val de Loire']
+    elif region == 'Corse':
+        region = regions['Corse']
+    elif region == 'Île-de-France':
+        region = regions['Île-de-France']
+    elif region == 'Occitanie':
+        region = regions['Occitanie']
+    elif region == 'Hauts-de-France':
+        region = regions['Hauts-de-France']
+    elif region == 'Normandie':
+        region = regions['Normandie']
+    elif region == 'Pays de la Loire':
+        region = regions['Pays de la Loire']
+    elif region == 'Provence-Alpes-Côte d\'Azur':
+        region = regions['Provence-Alpes-Côte d\'Azur']
+    #On fait un nouveau tableau contenant que les départements de la région choisie
+    dvf2022_metre_carre_region = dvf2022_metre_carre[dvf2022_metre_carre['Code departement'].isin(region)]
+    #On fait la moyenne du prix au mètre carré par département
+    moyenne_prix_metre_carre_region = dvf2022_metre_carre_region.groupby('Code departement')['Valeur fonciere'].mean() / dvf2022_metre_carre_region.groupby('Code departement')['Metre carre'].mean()
+    #On renomme les colonnes
+    moyenne_prix_metre_carre_region = moyenne_prix_metre_carre_region.reset_index()
+    moyenne_prix_metre_carre_region = moyenne_prix_metre_carre_region.rename(columns={'Code departement': 'Département', 0: 'Prix moyen au mètre carré'})
+    #On fait un geojson avec les départements
+    departement_geojson_url = "https://france-geojson.gregoiredavid.fr/repo/departements.geojson"
+    departement_geojson = requests.get(departement_geojson_url).json()
+    fig = px.choropleth(moyenne_prix_metre_carre_region,
+                        geojson=departement_geojson,
+                        locations='Département',
+                        color='Prix moyen au mètre carré',
+                        color_continuous_scale='pinkyl',
+                        featureidkey='properties.code',
+                        projection="mercator",
+                        title='Prix moyen par mètre carré par département en France')
+    fig.update_geos(fitbounds="locations", visible=False)
+    fig.update_layout(height=600, width=800)
+    plot_html = fig.to_html(full_html=False, default_height=500, default_width=700)
+    context = {
+        "plot": plot_html
+    }
+    return render(request, "plot.html", context)
