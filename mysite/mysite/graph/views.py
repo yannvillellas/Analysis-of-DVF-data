@@ -60,6 +60,8 @@ regions = {
 }
 
 
+
+
 class MyForm(forms.Form):
     my_choice_field = forms.ChoiceField(choices=[])
     def __init__(self, *args, **kwargs):
@@ -71,7 +73,7 @@ class MyForm(forms.Form):
 def homepage(request):
     list_choices = [
         ('prixMoyen', 'Prix moyen par mètre carré par département en France'),
-        ('nombreVente', 'Nombre de ventes par département en France'),]
+        ('nombreVentes', 'Nombre de ventes par département en France'),]
     form = MyForm(choices=list_choices)
     context = {
         'form': form
@@ -81,88 +83,14 @@ def homepage(request):
         if form.is_valid():
             choice = form.cleaned_data['my_choice_field']
             if choice == 'prixMoyen':
-                response = redirect('/prixMoyen/')
+                response = redirect('/prixMoyen/France')
                 return response
-            elif choice == 'nombreVente':
-                response = redirect('/nombreVente/')
+            elif choice == 'nombreVentes':
+                response = redirect('/nombreVentes/France')
                 return response
     return render(request, 'form.html', context)
 
-
-def prixMoyen(request):
-    moyenne_prix_metre_carre_departement = dvf2022_metre_carre.groupby('Code departement')['Valeur fonciere'].mean() / dvf2022_metre_carre.groupby('Code departement')['Metre carre'].mean()
-    #On renomme les colonnes
-    moyenne_prix_metre_carre_departement = moyenne_prix_metre_carre_departement.reset_index()
-    moyenne_prix_metre_carre_departement = moyenne_prix_metre_carre_departement.rename(columns={'Code departement': 'Département', 0: 'Prix moyen au mètre carré'})
-    #On fait un geojson avec les départements
-    departement_geojson_url = "https://france-geojson.gregoiredavid.fr/repo/departements.geojson"
-    departement_geojson = requests.get(departement_geojson_url).json()
-    fig = px.choropleth(moyenne_prix_metre_carre_departement, 
-                        geojson=departement_geojson, 
-                        locations='Département', 
-                        color='Prix moyen au mètre carré',
-                        color_continuous_scale='pinkyl',
-                        featureidkey='properties.code',
-                        projection="mercator",
-                        title='Prix moyen par mètre carré par département en France')
-    fig.update_geos(fitbounds="locations", visible=False)
-    fig.update_layout(height=600, width=800)
-    plot_html = fig.to_html(full_html=False, default_height=500, default_width=700)
-
-    # choisir une région pour afficher le prix moyen par mètre carré
-    list_choices = [ (key, key) for key in regions.keys() ]
-    form = MyForm(choices=list_choices)
-    if request.method == 'POST':
-        form = MyForm(request.POST, choices=list_choices)
-        if form.is_valid():
-            choice = form.cleaned_data['my_choice_field']
-            response = redirect('/prixMoyen/' + choice)
-            return response
-    context = {
-        "form": form,
-        "plot": plot_html
-    }
-    return render(request, "formplot.html", context)
-
-
-def nombreVente(request):
-    nombre_de_vente_par_departement = dvf2022.groupby('Code departement')['Valeur fonciere'].count()
-    #On renomme les colonnes
-    nombre_de_vente_par_departement = nombre_de_vente_par_departement.reset_index()
-    nombre_de_vente_par_departement = nombre_de_vente_par_departement.rename(columns={'Code departement': 'Département', 'Valeur fonciere': 'Nombre de ventes'})
-    #On fait un geojson avec les départements
-    departement_geojson_url = "https://france-geojson.gregoiredavid.fr/repo/departements.geojson"
-    departement_geojson = requests.get(departement_geojson_url).json()
-    fig = px.choropleth(nombre_de_vente_par_departement, 
-                        geojson=departement_geojson, 
-                        locations='Département', 
-                        color='Nombre de ventes',
-                        color_continuous_scale='pinkyl',
-                        featureidkey='properties.code',
-                        projection="mercator",
-                        title='Nombre de ventes par département en France')
-    fig.update_geos(fitbounds="locations", visible=False)
-    fig.update_layout(height=600, width=800)
-    plot_html = fig.to_html(full_html=False, default_height=500, default_width=700)
-
-    # choisir une région pour afficher le nombre de ventes
-    list_choices = [ (key, key) for key in regions.keys() ]
-    form = MyForm(choices=list_choices)
-    if request.method == 'POST':
-        form = MyForm(request.POST, choices=list_choices)
-        if form.is_valid():
-            choice = form.cleaned_data['my_choice_field']
-            response = redirect('/nombreVente/' + choice)
-            return response
-    context = {
-        "form": form,
-        "plot": plot_html
-    }
-    return render(request, "formplot.html", context)
-
-def prixMoyenRegions(request ,region):
-    # fonction qui permet de créer un plot avec les départements de la région choisie
-    # et qui redirige vers la page plot avec le plot
+def prixMoyenRegions(request, region):
     list_departements = regions[region]
     dvf2022_metre_carre_region = dvf2022_metre_carre[dvf2022_metre_carre['Code departement'].isin(list_departements)]
     moyenne_prix_metre_carre_departement = dvf2022_metre_carre_region.groupby('Code departement')['Valeur fonciere'].mean() / dvf2022_metre_carre_region.groupby('Code departement')['Metre carre'].mean()
@@ -198,5 +126,38 @@ def prixMoyenRegions(request ,region):
     }
     return render(request, "formplot.html", context)
 
-def nombreVenteRegions(request, region):
-    return render(request, "formplot.html")
+def nombreVentesRegions(request, region):
+    list_departements = regions[region]
+    dvf2022_region = dvf2022[dvf2022['Code departement'].isin(list_departements)]
+    nombre_de_vente_par_departement = dvf2022_region.groupby('Code departement')['Valeur fonciere'].count()
+    #On renomme les colonnes
+    nombre_de_vente_par_departement = nombre_de_vente_par_departement.reset_index()
+    nombre_de_vente_par_departement = nombre_de_vente_par_departement.rename(columns={'Code departement': 'Département', 'Valeur fonciere': 'Nombre de ventes'})
+    #On fait un geojson avec les départements
+    departement_geojson_url = "https://france-geojson.gregoiredavid.fr/repo/departements.geojson"
+    departement_geojson = requests.get(departement_geojson_url).json()
+    fig = px.choropleth(nombre_de_vente_par_departement,
+                        geojson=departement_geojson,
+                        locations='Département',
+                        color='Nombre de ventes',
+                        color_continuous_scale='pinkyl',
+                        featureidkey='properties.code',
+                        projection="mercator",
+                        title=f'Nombre de ventes en {region}')
+    fig.update_geos(fitbounds="locations", visible=False)
+    fig.update_layout(height=600, width=800)
+    plot_html = fig.to_html(full_html=False, default_height=500, default_width=700)
+
+    list_choices = [ (key, key) for key in regions.keys() ]
+    form = MyForm(choices=list_choices)
+    if request.method == 'POST':
+        form = MyForm(request.POST, choices=list_choices)
+        if form.is_valid():
+            choice = form.cleaned_data['my_choice_field']
+            response = redirect('/nombreVente/' + choice)
+            return response
+    context = {
+        "form": form,
+        "plot": plot_html
+    }
+    return render(request, "formplot.html", context)
