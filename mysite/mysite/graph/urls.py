@@ -8,6 +8,8 @@ urlpatterns = [
     path("prixMoyen/", views.prixMoyen, name="prixMoyen"),
     path("nombreVente/", views.nombreVente, name="nombreVente"),
     path("regionsForm/", views.regionsForm, name="regionsForm"),
-    path("regionsFormPlot/", views.regionsFormPlot, name="regionsFormPlot"),
     path("regionsPlot/", views.regionsPlot, name="regionsPlot"),
+    path("regionsPlot/<str:region>", views.regionsPlot, name="regionsPlot"),
+    path("regionsFormPlot/", views.regionsFormPlot, name="regionsFormPlot"),
+    path("regionsFormPlot/<str:region>", views.regionsFormPlot, name="regionsFormPlot"),
 ]

@@ -62,7 +62,7 @@ def homepage(request):
     list_choices = [
         ('prixMoyen', 'Prix moyen par mètre carré par département en France'),
         ('nombreVente', 'Nombre de ventes par département en France'),
-        ('regionsFormPlot', 'Choisir une région'),
+        ('regionsForm', 'Choisir une région'),
     ]
     form = MyForm(choices=list_choices)
     context = {
@@ -143,7 +143,8 @@ def regionsForm(request):
         form = MyForm(request.POST, choices=list_choices)
         if form.is_valid():
             choice = form.cleaned_data['my_choice_field']
-            return regionsPlot(request, choice)
+            response = redirect('/regionsFormPlot/' + choice)
+            return response
     return render(request, 'form.html', context)
 
 def regionsPlot(request, region):
@@ -173,3 +174,42 @@ def regionsPlot(request, region):
         "plot": plot_html
     }
     return render(request, "plot.html", context)
+
+def regionsFormPlot(request, region):
+       
+    # fonction qui permet de créer un plot avec les départements de la région choisie
+    # et qui redirige vers la page plot avec le plot
+    list_departements = regions[region]
+    dvf2022_metre_carre_region = dvf2022_metre_carre[dvf2022_metre_carre['Code departement'].isin(list_departements)]
+    moyenne_prix_metre_carre_departement = dvf2022_metre_carre_region.groupby('Code departement')['Valeur fonciere'].mean() / dvf2022_metre_carre_region.groupby('Code departement')['Metre carre'].mean()
+    #On renomme les colonnes
+    moyenne_prix_metre_carre_departement = moyenne_prix_metre_carre_departement.reset_index()
+    moyenne_prix_metre_carre_departement = moyenne_prix_metre_carre_departement.rename(columns={'Code departement': 'Département', 0: 'Prix moyen au mètre carré'})
+    #On fait un geojson avec les départements
+    departement_geojson_url = "https://france-geojson.gregoiredavid.fr/repo/departements.geojson"
+    departement_geojson = requests.get(departement_geojson_url).json()
+    fig = px.choropleth(moyenne_prix_metre_carre_departement,
+                        geojson=departement_geojson,
+                        locations='Département',
+                        color='Prix moyen au mètre carré',
+                        color_continuous_scale='pinkyl',
+                        featureidkey='properties.code',
+                        projection="mercator",
+                        title='Prix moyen par mètre carré par département en France')
+    fig.update_geos(fitbounds="locations", visible=False)
+    fig.update_layout(height=600, width=800)
+    plot_html = fig.to_html(full_html=False, default_height=500, default_width=700)
+
+    list_choices = [ (key, key) for key in regions.keys() ]
+    form = MyForm(choices=list_choices)
+    if request.method == 'POST':
+        form = MyForm(request.POST, choices=list_choices)
+        if form.is_valid():
+            choice = form.cleaned_data['my_choice_field']
+            response = redirect('/regionsFormPlot/' + choice)
+            return response
+    context = {
+        "form": form,
+        "plot": plot_html
+    }
+    return render(request, "formplot.html", context)
