@@ -34,6 +34,16 @@ group_by_department = dvf2022.groupby('Code departement')['Valeur fonciere'].mea
 group_by_department = group_by_department.drop(['971', '972', '973', '974'])
 #On regroupe par région
 regions = {
+    "France": ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10',
+            '11', '12', '13', '14', '15', '16', '17', '18', '19', '21',
+            '22', '23', '24', '25', '26', '27', '28', '29', '2A', '2B',
+            '30', '31', '32', '33', '34', '35', '36', '37', '38', '39',
+            '40', '41', '42', '43', '44', '45', '46', '47', '48', '49',
+            '50', '51', '52', '53', '54', '55', '56', '57', '58', '59',
+            '60', '61', '62', '63', '64', '65', '66', '67', '68', '69',
+            '70', '71', '72', '73', '74', '75', '76', '77', '78', '79',
+            '80', '81', '82', '83', '84', '85', '86', '87', '88', '89',
+            '90', '91', '92', '93', '94', '95'],
     "Auvergne-Rhône-Alpes": ['01', '03', '07', '15', '26', '38', '42', '43', '63', '69', '73', '74'],
     "Bourgogne-Franche-Comté": ['21', '25', '39', '58', '70', '71', '89', '90'],
     "Bretagne": ['22', '29', '35', '56'],
@@ -103,10 +113,21 @@ def prixMoyen(request):
     fig.update_geos(fitbounds="locations", visible=False)
     fig.update_layout(height=600, width=800)
     plot_html = fig.to_html(full_html=False, default_height=500, default_width=700)
+
+    # choisir une région pour afficher le prix moyen par mètre carré
+    list_choices = [ (key, key) for key in regions.keys() ]
+    form = MyForm(choices=list_choices)
+    if request.method == 'POST':
+        form = MyForm(request.POST, choices=list_choices)
+        if form.is_valid():
+            choice = form.cleaned_data['my_choice_field']
+            response = redirect('/prixMoyen/' + choice)
+            return response
     context = {
+        "form": form,
         "plot": plot_html
     }
-    return render(request, "plot.html", context)
+    return render(request, "formplot.html", context)
 
 
 def nombreVente(request):
@@ -128,10 +149,21 @@ def nombreVente(request):
     fig.update_geos(fitbounds="locations", visible=False)
     fig.update_layout(height=600, width=800)
     plot_html = fig.to_html(full_html=False, default_height=500, default_width=700)
+
+    # choisir une région pour afficher le nombre de ventes
+    list_choices = [ (key, key) for key in regions.keys() ]
+    form = MyForm(choices=list_choices)
+    if request.method == 'POST':
+        form = MyForm(request.POST, choices=list_choices)
+        if form.is_valid():
+            choice = form.cleaned_data['my_choice_field']
+            response = redirect('/nombreVente/' + choice)
+            return response
     context = {
+        "form": form,
         "plot": plot_html
     }
-    return render(request, "plot.html", context)
+    return render(request, "formplot.html", context)
 
 def regionsForm(request):
     list_choices = [ (key, key) for key in regions.keys() ]
@@ -147,7 +179,7 @@ def regionsForm(request):
             return response
     return render(request, 'form.html', context)
 
-def regionsPlot(request, region):
+def prixMoyenRegions(request ,region):
     # fonction qui permet de créer un plot avec les départements de la région choisie
     # et qui redirige vers la page plot avec le plot
     list_departements = regions[region]
@@ -166,36 +198,7 @@ def regionsPlot(request, region):
                         color_continuous_scale='pinkyl',
                         featureidkey='properties.code',
                         projection="mercator",
-                        title='Prix moyen par mètre carré par département en France')
-    fig.update_geos(fitbounds="locations", visible=False)
-    fig.update_layout(height=600, width=800)
-    plot_html = fig.to_html(full_html=False, default_height=500, default_width=700)
-    context = {
-        "plot": plot_html
-    }
-    return render(request, "plot.html", context)
-
-def regionsFormPlot(request, region):
-       
-    # fonction qui permet de créer un plot avec les départements de la région choisie
-    # et qui redirige vers la page plot avec le plot
-    list_departements = regions[region]
-    dvf2022_metre_carre_region = dvf2022_metre_carre[dvf2022_metre_carre['Code departement'].isin(list_departements)]
-    moyenne_prix_metre_carre_departement = dvf2022_metre_carre_region.groupby('Code departement')['Valeur fonciere'].mean() / dvf2022_metre_carre_region.groupby('Code departement')['Metre carre'].mean()
-    #On renomme les colonnes
-    moyenne_prix_metre_carre_departement = moyenne_prix_metre_carre_departement.reset_index()
-    moyenne_prix_metre_carre_departement = moyenne_prix_metre_carre_departement.rename(columns={'Code departement': 'Département', 0: 'Prix moyen au mètre carré'})
-    #On fait un geojson avec les départements
-    departement_geojson_url = "https://france-geojson.gregoiredavid.fr/repo/departements.geojson"
-    departement_geojson = requests.get(departement_geojson_url).json()
-    fig = px.choropleth(moyenne_prix_metre_carre_departement,
-                        geojson=departement_geojson,
-                        locations='Département',
-                        color='Prix moyen au mètre carré',
-                        color_continuous_scale='pinkyl',
-                        featureidkey='properties.code',
-                        projection="mercator",
-                        title='Prix moyen par mètre carré par département en France')
+                        title=f'Prix moyen par mètre carré en {region}')
     fig.update_geos(fitbounds="locations", visible=False)
     fig.update_layout(height=600, width=800)
     plot_html = fig.to_html(full_html=False, default_height=500, default_width=700)
@@ -206,10 +209,13 @@ def regionsFormPlot(request, region):
         form = MyForm(request.POST, choices=list_choices)
         if form.is_valid():
             choice = form.cleaned_data['my_choice_field']
-            response = redirect('/regionsFormPlot/' + choice)
+            response = redirect('/prixMoyen/' + choice)
             return response
     context = {
         "form": form,
         "plot": plot_html
     }
     return render(request, "formplot.html", context)
+
+def nombreVenteRegions(request, region):
+    return render(request, "formplot.html")
