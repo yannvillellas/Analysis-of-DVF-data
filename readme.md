@@ -8,8 +8,8 @@ TD I, étudiant à l'ESILV en A3, promo 2025
 Vous devez mettre à la racine de votre projet les valeurs foncières de 2019 et 2022, disponibles sur l'[open data du gouvernement](https://www.data.gouv.fr/fr/datasets/demandes-de-valeurs-foncieres/).
 
 #### Django
-Pour lancer notre site fait sur Django, vous devez [installer django](https://docs.djangoproject.com/fr/4.2/intro/install/). Après avoir suivi le tutoriel d'installation, rendez-vous à la racine du projet, mettre les valeurs foncières de 2022 et exécutez la commande suivante :
-- `python mysite/manage.py runserver`
+Pour lancer notre site fait sur Django, vous devez [installer django](https://docs.djangoproject.com/fr/4.2/intro/install/). Après avoir suivi le tutoriel d'installation, rendez-vous à la racine du projet, mettez les valeurs foncières de 2022 et exécutez la commande suivante :
+- `python mysite/mysite/manage.py runserver`
 - Et voilà, votre site est disponible à l'adresse [http://127.0.0.1:8000](http://127.0.0.1:8000).
 
 #### Notebook au format HTML
